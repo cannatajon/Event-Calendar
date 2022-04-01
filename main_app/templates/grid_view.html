@@ -2,10 +2,16 @@
 <h2 class="text-white">My Calendar</h2>
 <hr />
 
+<style>
+  .grid-toggle {
+    background-color: black;
+  }
+</style>
 <div class="toggle-switches">
-  <a href="/gridview"><span>Grid View</span></a>
+  <a href="/gridview"><span class="grid-toggle">Grid View</span></a>
   <a href="/"><span>Pin View</span></a>
   <a href="/"><span>List View</span></a>
 </div>
+<div class="toggle-view">{{calendar}}</div>
 
 {% endblock %}
