@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Red+Hat+Mono&display=swap");
+
+* {
+  color: white;
+  font-family: "Red Hat Mono", monospace;
+}
+
+body {
+  /* background-color: #212121; */
+  background-color: grey;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer.page-footer {
+  padding-top: 0;
+  text-align: right;
+}
+
+#flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.toggle-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.toggle-view span {
+  padding: 5px 20px 5px 20px;
+  border: 1px solid black;
+}
+
+.toggle-view span:hover {
+  background-color: black;
+  cursor: pointer;
+}
