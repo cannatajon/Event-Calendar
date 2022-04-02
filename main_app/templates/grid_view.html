@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block content %}
+<h2 class="text-white">My Calendar</h2>
+<hr />
+
+<style>
+  .grid-toggle {
+    background-color: black;
+  }
+</style>
+<div class="toggle-switches">
+  <a href="/gridview"><span class="grid-toggle">Grid View</span></a>
+  <a href="/"><span>Pin View</span></a>
+  <a href="/"><span>List View</span></a>
+</div>
+<div class="toggle-view">{{calendar}}</div>
+
+<div class="prevNext">
+  <a class="prevNextBtn" href="{'% url 'gridview' %}?{'{ prev_month }}">
+    Previous Month
+  </a>
+  <a class="prevNextBtn" href="{'% url 'gridview' %}?{'{ next_month }}">
+    Next Month
+  </a>
+</div>
+
+{% endblock %}

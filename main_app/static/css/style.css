@@ -19,7 +19,9 @@ main {
 
 footer.page-footer {
   padding-top: 0;
-  text-align: right;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
 #flex-container {
@@ -29,17 +31,87 @@ footer.page-footer {
 
 .toggle-view {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   margin-top: 20px;
 }
 
-.toggle-view span {
+.toggle-switches {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.toggle-switches span {
   padding: 5px 20px 5px 20px;
   border: 1px solid black;
 }
 
-.toggle-view span:hover {
+.toggle-switches span:hover {
   background-color: black;
   cursor: pointer;
+}
+
+.calendar {
+  width: 100%;
+  margin: auto;
+  font-size: 13px;
+  margin-bottom: 40px;
+}
+
+.calendar tr,
+.calendar td {
+  border: 1px solid white;
+  background-color: #212121;
+}
+
+.calendar td:hover {
+  background-color: #171616;
+  cursor: pointer;
+}
+
+.calendar th {
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.calendar td {
+  width: 200px;
+  height: 150px;
+  padding: 20px 0px 0px 5px;
+}
+
+.month {
+  font-size: 25px;
+}
+
+.date {
+  font-size: 16px;
+}
+
+ul {
+  height: 100%;
+  padding: 0px 5px 0px 20px;
+}
+
+.prevNext {
+  border: 1px solid red;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.prevNextBtn {
+  outline: none;
+  color: white;
+  background-color: transparent;
+  box-shadow: 0 0 0 0;
+  padding: 0;
+  border: 1px solid red;
+  margin: 5px;
+}
+
+.clearfix {
+  margin: 15px;
 }
