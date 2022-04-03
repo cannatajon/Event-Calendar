@@ -40,7 +40,14 @@
     </div>
 </nav>
 
-{% if events %} {% for event in events %}
+{% if events %}
+<h4>
+    Found {{ num_results }} event{{num_results|pluralize}} matching
+    <i>'{{query}}'</i>
+</h4>
+{% if num_results > events.count %}
+<h6>Showing top {{ events.count }} results</h6>
+{% endif %} {% for event in events %}
 
 <div class="row card horizontal valign-wrapper">
     <div class="col s4 card-image">

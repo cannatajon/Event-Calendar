@@ -16,17 +16,26 @@ def home(req):
 
 def search(req):
 
+    events = []
+
     search_term = req.GET.get("q") if req.GET.get("q") else ""
     city = req.GET.get("city") if req.GET.get("city") else ""
 
-    events = Event.objects.filter(
-        Q(title__icontains=search_term) |
-        Q(description__icontains=search_term) |
-        Q(tags__name__icontains=search_term) &
-        (Q(venue__address__icontains=city))
-    ).distinct()[:30]
+    query = ""
+    if search_term:
+        query += search_term
+    if city:
+        query += f" in {city}"
 
-    return render(req, "search.html", {"events": events})
+    if len(search_term) + len(city) > 0:
+        events = Event.objects.filter(
+            Q(title__icontains=search_term) |
+            Q(description__icontains=search_term) |
+            Q(tags__name__icontains=search_term),
+            (Q(venue__address__icontains=city))
+        ).distinct()
+
+    return render(req, "search.html", {"query": query, "events": events[:20], "num_results": events.count})
 
 
 def grid_view(req):
