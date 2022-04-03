@@ -40,7 +40,7 @@ class Command(BaseCommand):
                     "places": [
                         PLACES[place]
                     ],
-                    "page": 1,
+                    "page": 1,  # Change this number to get more results
                     "page_size": 50,
                     "online_events_only": False,
                     "client_timezone": "America/Toronto"
@@ -62,6 +62,11 @@ class Command(BaseCommand):
                 events = data["events"]["results"]
                 for event in events:
 
+                    # skip if no image property to avoid error
+                    if "image" not in event.keys():
+                        print('skipping event that is missing image')
+                        continue
+
                     # Create venue object
                     v, created = Venue.objects.get_or_create(
                         eventbrite_id=event["primary_venue"]["id"],
@@ -77,9 +82,9 @@ class Command(BaseCommand):
                         title=event["name"],
                         description=event["summary"],
                         start_time=datetime.datetime.fromisoformat(
-                            f"{event['start_date']} {event['start_time']}:00"),
+                            f"{event['start_date']}T{event['start_time']}:00+00:00"),
                         end_time=datetime.datetime.fromisoformat(
-                            f"{event['end_date']} {event['end_time']}:00"),
+                            f"{event['end_date']}T{event['end_time']}:00+00:00"),
                         image=event["image"]["url"],
                     )
 
