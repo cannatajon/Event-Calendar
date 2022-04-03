@@ -1,18 +1,35 @@
-from urllib import response
-from django.shortcuts import render, redirect
+import calendar
 from datetime import date, datetime, timedelta
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import generic
 from django.utils.safestring import mark_safe
+from django.db.models import Q
 from .models import *
 from .utils import Calendar
-import calendar
-
-# Create your views here.
+from django.utils.timezone import is_aware
 
 
 def home(req):
     return render(req, "home.html")
+
+
+def search(req):
+
+    search_term = req.GET.get("q") if req.GET.get("q") else ""
+    city = req.GET.get("city") if req.GET.get("city") else ""
+
+    events = Event.objects.filter(
+        Q(title__icontains=search_term) |
+        Q(description__icontains=search_term) |
+        Q(tags__name__icontains=search_term) &
+        (Q(venue__address__icontains=city))
+    ).distinct()[:30]
+
+    for event in events:
+        print(event)
+
+    return render(req, "search.html", {"events": events})
 
 
 def grid_view(req):

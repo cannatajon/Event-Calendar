@@ -1,0 +1,64 @@
+{% extends 'base.html' %} {% block content %}
+<h2 class="text-white">Search Events</h2>
+<hr />
+
+<nav class="transparent">
+    <div class="nav-wrapper">
+        <form class="row" action="" method="GET">
+            <div class="input-field blue-grey-text text-darken-5 col s6">
+                <input
+                    id="search"
+                    class="blue-grey lighten-5"
+                    type="search"
+                    name="q"
+                    autofocus
+                />
+                <label class="label-icon" for="search"
+                    ><i class="material-icons">search</i></label
+                >
+                <i class="material-icons">close</i>
+            </div>
+            <div class="input-field blue-grey-text text-darken-5 col s4">
+                <select class="multiple blue-grey lighten-5" name="city">
+                    <option value="" disabled selected>Cities to search</option>
+                    <option value="toronto">Toronto</option>
+                    <option value="montreal">Montreal</option>
+                    <option value="calgary">Calgary</option>
+                    <option value="ottawa">Ottawa</option>
+                    <option value="edmonton">Edmonton</option>
+                    <option value="mississauga">Mississauga</option>
+                    <option value="winnipeg">Winnipeg</option>
+                    <option value="vancouver">Vancouver</option>
+                    <option value="brampton">Brampton</option>
+                    <option value="quebec">Quebec</option>
+                </select>
+            </div>
+            <div class="col s2">
+                <input class="btn" type="submit" value="Search" />
+            </div>
+        </form>
+    </div>
+</nav>
+
+{% if events %} {% for event in events %}
+
+<div class="row card horizontal valign-wrapper">
+    <div class="col s4 card-image">
+        <img class="responsive-img" src="{{ event.image }}" />
+    </div>
+    <div class="col s8 card-content grey-text text-darken-4">
+        <span class="card-title">{{ event.title }}</span>
+        <p>{{ event.start_time }} - {{ event.end_time }}</p>
+        <p>{{ event.description }}</p>
+        {% for venue in event.venue.all %}
+        <small>{{venue.name}} - {{venue.address}}</small>
+        {% endfor %}
+        <div>
+            {% for tag in event.tags.all %}
+            <div class="chip">{{ tag.name }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endfor %} {% endif %} {% endblock %}
