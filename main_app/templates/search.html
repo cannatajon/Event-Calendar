@@ -19,7 +19,7 @@
                 <i class="material-icons">close</i>
             </div>
             <div class="input-field blue-grey-text text-darken-5 col s4">
-                <select class="multiple blue-grey lighten-5" name="city">
+                <select multiple class="blue-grey lighten-5" name="cities">
                     <option value="" disabled selected>Cities to search</option>
                     <option value="toronto">Toronto</option>
                     <option value="montreal">Montreal</option>
@@ -43,7 +43,7 @@
 {% if events %}
 <h4>
     Found {{ num_results }} event{{num_results|pluralize}} matching
-    <i>'{{query}}'</i>
+    <i>'{{search_term}}' in {{ search_locations|join:", " }}</i>
 </h4>
 {% if num_results > events.count %}
 <h6>Showing top {{ events.count }} results</h6>
@@ -58,6 +58,7 @@
         <p>{{ event.start_time }} - {{ event.end_time }}</p>
         <p>{{ event.description }}</p>
         {% for venue in event.venue.all %}
+        <p>{{ venue.city|title }}</p>
         <small>{{venue.name}} - {{venue.address}}</small>
         {% endfor %}
         <div>

@@ -10,6 +10,7 @@ class Tag(models.Model):
 class Venue(models.Model):
     eventbrite_id = models.CharField(max_length=16)
     name = models.CharField(max_length=100)
+    city = models.CharField(max_length=100, blank=True)
     address = models.TextField()
 
 

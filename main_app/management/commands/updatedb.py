@@ -68,16 +68,18 @@ class Command(BaseCommand):
                         continue
 
                     # Create venue object
-                    v, created = Venue.objects.get_or_create(
+                    v, created = Venue.objects.update_or_create(
                         eventbrite_id=event["primary_venue"]["id"],
                         name=event["primary_venue"]["name"],
-                        address=event["primary_venue"]["address"]["localized_address_display"]
+                        city=event["primary_venue"]["address"]["city"].lower(),
+                        address=event["primary_venue"]["address"]["address_1"]
                     )
+
                     if created == True:
                         print('added new venue')
 
                     # Create event object
-                    e, created = Event.objects.get_or_create(
+                    e, created = Event.objects.update_or_create(
                         eventbrite_id=event["id"],
                         title=event["name"],
                         description=event["summary"],
