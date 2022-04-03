@@ -26,9 +26,6 @@ def search(req):
         (Q(venue__address__icontains=city))
     ).distinct()[:30]
 
-    for event in events:
-        print(event)
-
     return render(req, "search.html", {"events": events})
 
 
