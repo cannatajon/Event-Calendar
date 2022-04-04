@@ -59,6 +59,16 @@ def search(req):
     })
 
 
+def event_detail(request, event_id):
+
+    e = Event.objects.get(id=event_id)
+    # e.user.add(request.user.id)
+
+    print(e)
+
+    return render(request, 'event_detail.html', {'event': e})
+
+
 # not sure if this willa ctually help but
 # This can be used for later when we create an event view
 # so whoever makes the event it will be stored as thier id in the database (we can use this for when we create the calander view as well):
