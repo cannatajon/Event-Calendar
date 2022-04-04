@@ -25,7 +25,7 @@ class Event(models.Model):
     tags = models.ManyToManyField(Tag)
     venue = models.ManyToManyField(Venue)
     attendees = models.ManyToManyField(User, blank=True, related_name="attendees")
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=6)  # user id 6 is eventbrite
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=1)  # user id 1 is eventbrite
 
     def __str__(self):
-        return self.id + ' - ' + self.title
+        return str(self.id) + ' - ' + self.title

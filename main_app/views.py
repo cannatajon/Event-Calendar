@@ -62,12 +62,20 @@ def search(req):
 def event_detail(request, event_id):
 
     e = Event.objects.get(id=event_id)
-    # e.user.add(request.user.id)
-
-    print(e)
 
     return render(request, 'event_detail.html', {'event': e})
 
+
+def add_to_calendar(request, event_id):
+    e = Event.objects.get(id=event_id)
+
+    if request.method == 'POST':
+        e.attendees.add(request.user.id)
+        return redirect('event_detail', e.id)
+
+    return render(request, 'confirm_add_to_cal.html', {'event': e})
+
+    return
 
 # not sure if this willa ctually help but
 # This can be used for later when we create an event view
