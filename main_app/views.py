@@ -1,17 +1,19 @@
 
 import calendar
+from socket import create_server
 from urllib import response
 from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
-#we import these to secure the url paths
+# we import these to secure the url paths
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
- #and we write these to secure them : 
- # @login_required above functions as a decoration and 
- # LoginRequiredMixin i.e somethingUpdate(LoginRequiredMixin, UpdateView)
+# and we write these to secure them :
+# @login_required above functions as a decoration and
+# LoginRequiredMixin i.e somethingUpdate(LoginRequiredMixin, UpdateView)
 
 from datetime import date, datetime, timedelta
 from django.shortcuts import render, redirect
@@ -21,7 +23,6 @@ from django.utils.safestring import mark_safe
 from django.db.models import Q
 from .models import *
 from .utils import Calendar
-
 
 
 # Create your views here.
@@ -37,7 +38,8 @@ def search(req):
               "mississauga", "winnipeg", "vancouver", "brampton", "quebec"]
 
     search_term = req.GET.get("q") if req.GET.get("q") else ""
-    search_locations = req.GET.getlist("cities") if req.GET.getlist("cities") else cities
+    search_locations = req.GET.getlist(
+        "cities") if req.GET.getlist("cities") else cities
 
     if len(search_term) > 0:
         events = Event.objects.filter(
@@ -65,7 +67,6 @@ def search(req):
 #     return super().form_valid(form)
 
 
-
 def signup(request):
     error_message = ''
     if request.method == 'POST':
@@ -79,6 +80,8 @@ def signup(request):
     form = UserCreationForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
+
+
 def grid_view(req):
     return render(req, 'grid_view.html')
 
@@ -119,3 +122,11 @@ def next_month(d):
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
 
+
+class EventCreate(LoginRequiredMixin, CreateView):
+    model = Event
+    fields = ['title', 'description', 'start_time', 'end_time']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
