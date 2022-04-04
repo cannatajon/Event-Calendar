@@ -23,6 +23,9 @@
           </ul>
 
           <ul class="right">
+
+            {% if user.is_authenticated %}
+
             <li>
               <a href="#">Add Event</a>
             </li>
@@ -33,8 +36,24 @@
               <a href="#">My Events</a>
             </li>
             <li>
-              <a href="#">Logout</a>
+              <a href="{% url 'logout' %}">Logout</a>
             </li>
+
+
+            Welcome {{user.username}}
+
+            {% else %}
+
+            <li>
+              <a href="{% url 'login' %}">Login</a>
+            </li>
+
+            <li>
+              <a href="{% url 'signup' %}">Sign up</a>
+            </li>
+
+            {% endif %}
+
           </ul>
         </div>
       </nav>
