@@ -59,6 +59,24 @@ def search(req):
     })
 
 
+def event_detail(request, event_id):
+
+    e = Event.objects.get(id=event_id)
+
+    return render(request, 'event_detail.html', {'event': e})
+
+
+def add_to_calendar(request, event_id):
+    e = Event.objects.get(id=event_id)
+
+    if request.method == 'POST':
+        e.attendees.add(request.user.id)
+        return redirect('event_detail', e.id)
+
+    return render(request, 'confirm_add_to_cal.html', {'event': e})
+
+    return
+
 # not sure if this willa ctually help but
 # This can be used for later when we create an event view
 # so whoever makes the event it will be stored as thier id in the database (we can use this for when we create the calander view as well):
