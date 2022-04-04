@@ -30,7 +30,6 @@ from .utils import Calendar
 def home(req):
     return render(req, "home.html")
 
-
 def search(req):
     events = []
     cities = ["toronto", "montreal", "calgary", "ottawa", "edmonton",
@@ -119,3 +118,5 @@ def next_month(d):
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
 
+def about(request):
+    return render(request, "about.html")
