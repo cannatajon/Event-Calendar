@@ -34,6 +34,7 @@
             crossorigin="anonymous"
         ></script>
 
+
         <title>Event Calendar</title>
     </head>
     <body>
@@ -45,24 +46,45 @@
                             <a href="/" class="left brand-logo">Calendar.io</a>
                         </li>
 
-                        <ul class="right">
-                            <li>
-                                <a href="#">Add Event</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'search' %}">Search Events</a>
-                            </li>
-                            <li>
-                                <a href="#">My Events</a>
-                            </li>
-                            <li>
-                                <a href="#">Logout</a>
-                            </li>
-                        </ul>
-                    </ul>
-                </div>
-            </nav>
-        </header>
+
+          <ul class="right">
+
+            {% if user.is_authenticated %}
+
+            <li>
+              <a href="#">Add Event</a>
+            </li>
+             <li>
+              <a href="{% url 'search' %}">Search Events</a>
+             </li>
+            <li>
+              <a href="#">My Events</a>
+            </li>
+            <li>
+              <a href="{% url 'logout' %}">Logout</a>
+            </li>
+
+
+            Welcome {{user.username}}
+
+            {% else %}
+
+            <li>
+              <a href="{% url 'login' %}">Login</a>
+            </li>
+
+            <li>
+              <a href="{% url 'signup' %}">Sign up</a>
+            </li>
+
+            {% endif %}
+
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+                        
 
         <main class="container">{% block content %} {% endblock %}</main>
 
