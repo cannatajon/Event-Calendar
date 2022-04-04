@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Red+Hat+Mono&display=swap");
 
 * {
-  color: white;
   font-family: "Red Hat Mono", monospace;
 }
 
@@ -11,6 +10,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  color: white;
 }
 
 main {
@@ -52,6 +52,14 @@ footer.page-footer {
   cursor: pointer;
 }
 
+.card {
+  color: black;
+  height: 320px;
+}
+
+.card img {
+  width: 100%;
+}
 .calendar {
   width: 100%;
   margin: auto;
@@ -91,7 +99,8 @@ footer.page-footer {
 }
 
 ul {
-  height: 100%;
+  /* was causing issues with materialize dropdown menu */
+  /* height: 100%; */  
   padding: 0px 5px 0px 20px;
 }
 
