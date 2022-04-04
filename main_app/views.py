@@ -6,12 +6,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
-#we import these to secure the url paths
+# we import these to secure the url paths
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
- #and we write these to secure them : 
- # @login_required above functions as a decoration and 
- # LoginRequiredMixin i.e somethingUpdate(LoginRequiredMixin, UpdateView)
+# and we write these to secure them :
+# @login_required above functions as a decoration and
+# LoginRequiredMixin i.e somethingUpdate(LoginRequiredMixin, UpdateView)
 
 from datetime import date, datetime, timedelta
 from django.shortcuts import render, redirect
@@ -21,7 +21,6 @@ from django.utils.safestring import mark_safe
 from django.db.models import Q
 from .models import *
 from .utils import Calendar
-
 
 
 # Create your views here.
@@ -57,13 +56,22 @@ def search(req):
     })
 
 
+def event_detail(request, event_id):
+
+    e = Event.objects.get(id=event_id)
+    # e.user.add(request.user.id)
+
+    print(e)
+
+    return render(request, 'event_detail.html', {'event': e})
+
+
 # not sure if this willa ctually help but
 # This can be used for later when we create an event view
 # so whoever makes the event it will be stored as thier id in the database (we can use this for when we create the calander view as well):
 # def form_valid(self, form):
 #     form.instance.user = self.request.user
 #     return super().form_valid(form)
-
 
 
 def signup(request):
@@ -79,6 +87,8 @@ def signup(request):
     form = UserCreationForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
+
+
 def grid_view(req):
     return render(req, 'grid_view.html')
 
@@ -118,4 +128,3 @@ def next_month(d):
     next_month = last + timedelta(days=1)
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
-

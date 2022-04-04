@@ -5,8 +5,10 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('gridview/', views.CalendarView.as_view(), name='grid_view'),
     path('search/', views.search, name='search'),
- #For Django Auth
+
+    path('events/<int:event_id>', views.event_detail, name='event_detail'),
+
+    # For Django Auth
     path('accounts/signup/', views.signup, name='signup'),
 
 ]
-

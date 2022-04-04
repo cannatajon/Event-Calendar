@@ -49,24 +49,26 @@
 <h6>Showing top {{ events.count }} results</h6>
 {% endif %} {% for event in events %}
 
-<div class="row card horizontal valign-wrapper">
-    <div class="col s4 card-image">
-        <img class="responsive-img" src="{{ event.image }}" />
-    </div>
-    <div class="col s8 card-content grey-text text-darken-4">
-        <span class="card-title">{{ event.title }}</span>
-        <p>{{ event.start_time }} - {{ event.end_time }}</p>
-        <p>{{ event.description }}</p>
-        {% for venue in event.venue.all %}
-        <p>{{ venue.city|title }}</p>
-        <small>{{venue.name}} - {{venue.address}}</small>
-        {% endfor %}
-        <div>
-            {% for tag in event.tags.all %}
-            <div class="chip">{{ tag.name }}</div>
+<a href="{% url 'event_detail' event.id %}">
+    <div class="row card horizontal valign-wrapper">
+        <div class="col s4 card-image">
+            <img class="responsive-img" src="{{ event.image }}" />
+        </div>
+        <div class="col s8 card-content grey-text text-darken-4">
+            <span class="card-title">{{ event.title }}</span>
+            <p>{{ event.start_time }} - {{ event.end_time }}</p>
+            <p>{{ event.description }}</p>
+            {% for venue in event.venue.all %}
+            <p>{{ venue.city|title }}</p>
+            <small>{{venue.name}} - {{venue.address}}</small>
             {% endfor %}
+            <div>
+                {% for tag in event.tags.all %}
+                <div class="chip">{{ tag.name }}</div>
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
+</a>
 
 {% endfor %} {% endif %} {% endblock %}
