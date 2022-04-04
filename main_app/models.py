@@ -24,7 +24,8 @@ class Event(models.Model):
     image = models.URLField(max_length=500, blank=True)
     tags = models.ManyToManyField(Tag)
     venue = models.ManyToManyField(Venue)
+    created_user = models.IntegerField(default=0)
+    user = models.ManyToManyField(User)
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-
+   
