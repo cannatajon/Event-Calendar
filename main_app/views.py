@@ -87,6 +87,7 @@ def event_detail(request, event_id):
     }
     response = requests.get(url, headers=headers)
     data = json.loads(response.text)
+    print(data)
     details = data['modules']
     for detail in details:
         try:
