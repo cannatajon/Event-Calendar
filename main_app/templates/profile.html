@@ -2,7 +2,24 @@
 
 <h1>profile page</h1>
 
-{{user.username}}
-<a href="{% url 'profile_update' profile.id %}">edit</a>
-<a href="{% url 'profile_delete' profile.id %}">delete</a>
+<h6>username: {{user.username}}</h6>
+<h6>email: {{user.email}}</h6>
+
+<a href="{% url 'user_delete' user.id %}">delete account</a>
+<a href="{% url 'edit_profile' profile.id %}">edit profile</a>
+<br><br>
+
+{{user.profile.bio}}<br>
+
+<img src="{{user.profile.profile_pic}}" width="50" height="60">
+
+<h3>events you created</h3>
+
+
+<h3>events you are attending</h3>
+
+
+
+
+
 {% endblock %}
