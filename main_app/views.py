@@ -2,7 +2,6 @@
 import json
 import calendar
 import os
-from pprint import pprint
 import requests
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
