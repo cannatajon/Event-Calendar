@@ -39,13 +39,15 @@ from .models import *
 from .utils import Calendar
 from django.views.generic.edit import DeleteView, UpdateView
 
+
 S3_BASE_URL = 'https://s3-ca-central-1.amazonaws.com/'
 BUCKET = 'eventcalendar2'
 
+@login_required
 def home(req):
     return render(req, "home.html")
 
-
+@login_required
 def search(req):
     events = []
     cities = ["toronto", "montreal", "calgary", "ottawa", "edmonton",
@@ -103,16 +105,13 @@ def add_to_calendar(request, event_id):
 
     return render(request, 'confirm_add_to_cal.html', {'event': e})
 
-    return
-
 # not sure if this willa ctually help but
 # This can be used for later when we create an event view
 # so whoever makes the event it will be stored as thier id in the database (we can use this for when we create the calander view as well):
 # def form_valid(self, form):
 #     form.instance.user = self.request.user
 #     return super().form_valid(form)
-
-
+]
 def signup(request):
     error_message = ''
     if request.method == 'POST':
@@ -129,8 +128,10 @@ def signup(request):
     return render(request, 'registration/signup.html', context)
 
 
+@login_required
 def grid_view(req):
     return render(req, 'grid_view.html')
+
 
 
 class Calendar(HTMLCalendar):
@@ -174,7 +175,7 @@ class Calendar(HTMLCalendar):
         return cal
 
 
-class CalendarView(generic.ListView):
+class CalendarView(LoginRequiredMixin, generic.ListView):
     model = Event
     template_name = 'grid_view.html'
 
@@ -221,6 +222,8 @@ def next_month(d):
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
 
+def about(request):
+    return render(request, "about.html")
 
 def profile(request):
 

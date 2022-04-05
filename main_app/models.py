@@ -30,6 +30,7 @@ class Event(models.Model):
     image = models.URLField(max_length=500, blank=True)
     tags = models.ManyToManyField(Tag)
     venue = models.ManyToManyField(Venue)
+
     attendees = models.ManyToManyField(
         User, blank=True, related_name="attendees")
     created_by = models.ForeignKey(
@@ -43,4 +44,3 @@ class Profile(models.Model):
     bio = models.TextField(default='edit my bio', max_length=250)
     def __str__(self):
         return self.user.username
-

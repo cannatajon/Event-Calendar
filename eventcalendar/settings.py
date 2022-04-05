@@ -132,7 +132,7 @@ STATIC_URL = 'static/'
 LOGIN_REDIRECT_URL = '/'
 
 # same thing as above, we can change this to a different page later if you guys want, like an about page or something
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/about'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
