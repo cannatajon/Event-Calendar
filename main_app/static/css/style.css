@@ -10,7 +10,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  color: white;
+  color: black;
 }
 
 main {
@@ -69,12 +69,12 @@ footer.page-footer {
 
 .calendar tr,
 .calendar td {
-  border: 1px solid white;
-  background-color: #212121;
+  border: 1px solid black;
+  background-color: white;
 }
 
 .calendar td:hover {
-  background-color: #171616;
+  background-color: white;
   cursor: pointer;
 }
 
@@ -88,6 +88,7 @@ footer.page-footer {
   width: 200px;
   height: 150px;
   padding: 20px 0px 0px 5px;
+  position: relative;
 }
 
 .month {
@@ -96,6 +97,9 @@ footer.page-footer {
 
 .date {
   font-size: 16px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
 }
 
 ul {
@@ -104,11 +108,15 @@ ul {
   padding: 0px 5px 0px 20px;
 }
 
+
+
 .prevNext {
-  border: 1px solid red;
+  border: 1px solid black;
   width: 100%;
   display: flex;
   justify-content: end;
+  color: white;
+  background-color: red;
 }
 
 .prevNextBtn {
@@ -117,7 +125,7 @@ ul {
   background-color: transparent;
   box-shadow: 0 0 0 0;
   padding: 0;
-  border: 1px solid red;
+  border: 1px solid black;
   margin: 5px;
 }
 
