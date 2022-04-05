@@ -1,11 +1,18 @@
 {% extends 'base.html' %} {% block content %}
-<h2 class="text-white">My Calendar</h2>
+<h2 class="white-text">My Calendar</h2>
 <hr />
 
 <style>
-  .grid-toggle {
-    background-color: black;
-  }
+    
+    body{
+        background-image: url(../static/img/o.png);
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    
+
 </style>
 <div class="toggle-switches">
   <a href="/gridview"><span class="grid-toggle">Grid View</span></a>
