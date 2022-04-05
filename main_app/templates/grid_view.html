@@ -16,19 +16,19 @@
     }
 </style>
 <div class="toggle-switches">
-    <a href="/gridview"><span class="grid-toggle">Grid View</span></a>
-    <a href="/"><span>Pin View</span></a>
-    <a href="/"><span>List View</span></a>
+  <a href="/gridview"><span class="grid-toggle">Grid View</span></a>
+  <a href="/"><span>Pin View</span></a>
+  <a href="/"><span>List View</span></a>
 </div>
 <div class="toggle-view">{{calendar}}</div>
 
 <div class="prevNext">
-    <a class="prevNextBtn" href="{% url 'grid_view' %}?{{ prev_month }}">
-        Previous Month
-    </a>
-    <a class="prevNextBtn" href="{% url 'grid_view' %}?{{ next_month }}">
-        Next Month
-    </a>
+  <a class="prevNextBtn" href="{% url 'grid_view' %}?{{ prev_month }}">
+    Previous Month
+  </a>
+  <a class="prevNextBtn" href="{% url 'grid_view' %}?{{ next_month }}">
+    Next Month
+  </a>
 </div>
 
 {% endblock %}

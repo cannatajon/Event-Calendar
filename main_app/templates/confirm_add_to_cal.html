@@ -4,7 +4,7 @@
 <h5>Are you sure you would like to add this event to your calendar?</h5>
 <form action="{% url 'add_to_calendar' event.id %}" method="POST">
     {% csrf_token %}
-    <a href="{% url 'home' %}" class="btn">Cancel</a>
+    <a href="{% url 'event_detail' event.id %}" class="btn">Cancel</a>
     <input type="submit" class="btn" value="Confirm" />
 </form>
 
