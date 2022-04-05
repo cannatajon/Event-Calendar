@@ -1,12 +1,18 @@
 
+import json
 import calendar
+import os
+import requests
+import uuid
+import boto3
+from urllib import response
+
 from getpass import getuser
 from socket import create_server
 from urllib import request, response
 
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .forms import EventForm
@@ -34,14 +40,16 @@ from .utils import Calendar
 from django.views.generic.edit import DeleteView, UpdateView
 
 
-# Create your views here.
-currentUser = None
+S3_BASE_URL = 'https://s3-ca-central-1.amazonaws.com/'
+BUCKET = 'eventcalendar2'
 
 
+@login_required
 def home(req):
     return render(req, "home.html")
 
 
+@login_required
 def search(req):
     events = []
     cities = ["toronto", "montreal", "calgary", "ottawa", "edmonton",
@@ -70,10 +78,24 @@ def search(req):
 
 
 def event_detail(request, event_id):
-
+    detail_items = []
     e = Event.objects.get(id=event_id)
 
-    return render(request, 'event_detail.html', {'event': e})
+    url = f"https://www.eventbriteapi.com/v3/events/{e.eventbrite_id}/structured_content/?purpose=listing"
+    headers = {
+        'Authorization': f"Bearer {os.getenv('EVENTBRITE_API_KEY')}"
+    }
+    response = requests.get(url, headers=headers)
+    data = json.loads(response.text)
+    details = data['modules']
+    for detail in details:
+        try:
+            detail_items.append(detail['data']['body']['text'])
+        except KeyError:
+            pass
+
+    context = {'event': e, 'details': detail_items}
+    return render(request, 'event_detail.html', context)
 
 
 def add_to_calendar(request, event_id):
@@ -84,8 +106,6 @@ def add_to_calendar(request, event_id):
         return redirect('event_detail', e.id)
 
     return render(request, 'confirm_add_to_cal.html', {'event': e})
-
-    return
 
 # not sure if this willa ctually help but
 # This can be used for later when we create an event view
@@ -111,6 +131,7 @@ def signup(request):
     return render(request, 'registration/signup.html', context)
 
 
+@login_required
 def grid_view(req):
     return render(req, 'grid_view.html')
 
@@ -156,7 +177,7 @@ class Calendar(HTMLCalendar):
         return cal
 
 
-class CalendarView(generic.ListView):
+class CalendarView(LoginRequiredMixin, generic.ListView):
     model = Event
     template_name = 'grid_view.html'
 
@@ -204,12 +225,38 @@ def next_month(d):
     return month
 
 
+def about(request):
+    return render(request, "about.html")
+
+
 def profile(request):
 
     #my_events = Event.objects.get(created_user=request.user.id)
     #attending = Event.objects.get(user=request.user.id)
     profile = Profile.objects.get(user=request.user)
     return render(request, 'profile.html', {'profile': profile})
+
+
+def add_photo(request, profile_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + \
+            photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            # build the full url string
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            # we can assign to cat_id or cat (if you have a cat object)
+            profile = Profile.objects.get(id=profile_id)
+            profile.profile_pic = url
+            profile.save()
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('profile')
 
 
 class DeleteUser(LoginRequiredMixin, DeleteView):
@@ -221,11 +268,6 @@ class editProfile(LoginRequiredMixin, UpdateView):
     model = Profile
     fields = ['profile_pic', 'bio']
     success_url = '/profile/'
-
-
-class EventCreate(LoginRequiredMixin, CreateView):
-    model = Event
-    fields = ['title', 'description', 'start_time', 'end_time']
 
 
 def event_create(req):
@@ -241,11 +283,6 @@ def add_event(req):
         new_event.save()
     return redirect('grid_view')
 
-
-def getCurrentUser(req):
-    return req.user
-
-
-def form_valid(self, form):
-    form.instance.user = self.request.user
-    return super().form_valid(form)
+    # def form_valid(self, form):
+    #     form.instance.user = self.request.user
+    #     return super().form_valid(form)

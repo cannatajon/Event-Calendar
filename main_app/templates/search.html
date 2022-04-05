@@ -12,6 +12,7 @@
                     type="search"
                     name="q"
                     autofocus
+                    value="{{search_term}}"
                 />
                 <label class="label-icon" for="search"
                     ><i class="material-icons">search</i></label
@@ -20,7 +21,9 @@
             </div>
             <div class="input-field blue-grey-text text-darken-5 col s4">
                 <select multiple class="blue-grey lighten-5" name="cities">
+                    {% comment %}
                     <option value="" disabled selected>Cities to search</option>
+                    {% endcomment %}
                     <option value="toronto">Toronto</option>
                     <option value="montreal">Montreal</option>
                     <option value="calgary">Calgary</option>

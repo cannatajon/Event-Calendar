@@ -7,12 +7,18 @@ from django.contrib.auth.models import User
 class Tag(models.Model):
     name = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.name
+
 
 class Venue(models.Model):
     eventbrite_id = models.CharField(max_length=16)
     name = models.CharField(max_length=100)
     city = models.CharField(max_length=100, blank=True)
     address = models.TextField()
+
+    def __str__(self):
+        return self.name
 
 
 class Event(models.Model):
@@ -24,6 +30,7 @@ class Event(models.Model):
     image = models.URLField(max_length=500, blank=True)
     tags = models.ManyToManyField(Tag)
     venue = models.ManyToManyField(Venue)
+
     attendees = models.ManyToManyField(
         User, blank=True, related_name="attendees")
     created_by = models.ForeignKey(
@@ -37,4 +44,3 @@ class Profile(models.Model):
     bio = models.TextField(default='edit my bio', max_length=250)
     def __str__(self):
         return self.user.username
-
