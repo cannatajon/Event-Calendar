@@ -1,5 +1,10 @@
 
 import calendar
+
+import uuid
+import boto3
+from urllib import response
+
 from getpass import getuser
 from socket import create_server
 from urllib import request, response
@@ -33,10 +38,10 @@ from .models import *
 from .utils import Calendar
 from django.views.generic.edit import DeleteView, UpdateView
 
+S3_BASE_URL = 'https://s3-ca-central-1.amazonaws.com/'
+BUCKET = 'eventcalendar2'
 
 # Create your views here.
-currentUser = None
-
 
 def home(req):
     return render(req, "home.html")
@@ -203,6 +208,7 @@ def next_month(d):
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
 
+
 def profile(request):
 
     #my_events = Event.objects.get(created_user=request.user.id)
@@ -210,16 +216,38 @@ def profile(request):
     profile = Profile.objects.get(user=request.user)
     return render(request, 'profile.html', {'profile': profile})
 
+
+def add_photo(request, profile_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            # build the full url string
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            # we can assign to cat_id or cat (if you have a cat object)
+            profile = Profile.objects.get(id=profile_id)
+            profile.profile_pic = url
+            profile.save()
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('profile')
+
+
 class DeleteUser(LoginRequiredMixin, DeleteView):
     model = User
     success_url = '/'
+
 
 class editProfile(LoginRequiredMixin, UpdateView):
     model = Profile
     fields = ['profile_pic', 'bio']
     success_url = '/profile/'
 
-    return render(request, 'profile.html')
 
 def event_create(req):
     event_form = EventForm()
@@ -241,5 +269,4 @@ def getCurrentUser(req):
 def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
-
 
