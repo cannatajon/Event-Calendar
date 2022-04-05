@@ -1,9 +1,38 @@
 {% extends 'base.html' %} {% block content %}
-<h1>event detail</h1>
-<p>{{ event }}</p>
-<p>Who's going: {{ event.attendees.all|join:', ' }}</p>
-<p>Uploaded by: {{ event.created_by }}</p>
-<form action="{% url 'add_to_calendar' event.id %}" metdhod="get">
-    <input type="submit" class="btn" value="Add to calendar" />
-</form>
-{% endblock content %}
+
+<div class="row">
+    <div class="col s12 offset-l2 m8">
+        <div class="card">
+            <div class="card-image">
+                <img src="{{event.image}}" />
+                <a
+                    href="{% url 'add_to_calendar' event.id %}"
+                    class="btn-floating halfway-fab waves-effect waves-light red tooltipped"
+                    data-tooltip="Add to calendar"
+                    data-position="top"
+                    ><i class="material-icons">add</i></a
+                >
+            </div>
+            <div class="card-content">
+                <span class="card-title">{{ event.title }}</span>
+                {% for detail in details %} {{ detail|safe }} {% endfor %}
+                <br />
+                <p>Starts: {{ event.start_time }}</p>
+                <p>Ends: {{ event.end_time }}</p>
+                <p>
+                    Venue: {% for venue in event.venue.values %}{{venue.name}}
+                    {%endfor %}
+                </p>
+                <br />
+                <p>Who's going: {{ event.attendees.all|join:', ' }}</p>
+                <p>Uploaded By: {{ event.created_by }}</p>
+                <br />
+                {% for tag in event.tags.all %}
+                <div class="chip">{{ tag.name }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+ß {% endblock content %}

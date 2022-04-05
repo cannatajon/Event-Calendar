@@ -7,7 +7,7 @@ urlpatterns = [
     path('search/', views.search, name='search'),
 
     path('events/create', views.EventCreate.as_view(), name="event_create"),
-    path('events/<int:event_id>', views.event_detail, name='event_detail'),
+    path('events/<int:event_id>/', views.event_detail, name='event_detail'),
     path('events/<int:event_id>/addtocalendar', views.add_to_calendar, name='add_to_calendar'),
 
     # For Django Auth

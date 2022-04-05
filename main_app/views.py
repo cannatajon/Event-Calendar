@@ -1,5 +1,8 @@
 
+import json
 import calendar
+from pprint import pprint
+import requests
 from socket import create_server
 from urllib import response
 from django.shortcuts import render, redirect
@@ -60,10 +63,23 @@ def search(req):
 
 
 def event_detail(request, event_id):
-
+    detail_items = []
     e = Event.objects.get(id=event_id)
 
-    return render(request, 'event_detail.html', {'event': e})
+    url = f"https://www.eventbriteapi.com/v3/events/{e.eventbrite_id}/structured_content/?purpose=listing"
+    headers = {
+        'Authorization': 'Bearer 7QG2FHFSTJBUM2ABNPKC'
+    }
+    response = requests.get(url, headers=headers)
+    data = json.loads(response.text)
+    pprint(data)
+    details = data['modules']
+    # print(details)
+    for detail in details:
+        detail_items.append(detail['data']['body']['text'])
+
+    context = {'event': e, 'details': detail_items}
+    return render(request, 'event_detail.html', context)
 
 
 def add_to_calendar(request, event_id):
