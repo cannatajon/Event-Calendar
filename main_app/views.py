@@ -2,13 +2,9 @@
 import json
 import calendar
 import os
-from pprint import pprint
 import requests
-from socket import create_server
-from urllib import response
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
@@ -27,9 +23,6 @@ from django.utils.safestring import mark_safe
 from django.db.models import Q
 from .models import *
 from .utils import Calendar
-
-
-# Create your views here.
 
 
 def home(req):
