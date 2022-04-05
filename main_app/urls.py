@@ -6,9 +6,11 @@ urlpatterns = [
     path('gridview/', views.CalendarView.as_view(), name='grid_view'),
     path('search/', views.search, name='search'),
 
-    path('events/create', views.EventCreate.as_view(), name="event_create"),
+    path('events/create', views.event_create, name="event_create"),
     path('events/<int:event_id>', views.event_detail, name='event_detail'),
-    path('events/<int:event_id>/addtocalendar', views.add_to_calendar, name='add_to_calendar'),
+    path('events/<int:event_id>/addtocalendar',
+         views.add_to_calendar, name='add_to_calendar'),
+    path('events/addevent', views.add_event, name='add_event'),
 
     # For Django Auth
     path('accounts/signup/', views.signup, name='signup'),
