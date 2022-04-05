@@ -6,7 +6,7 @@
 
 body {
   /* background-color: #212121; */
-  background-color: grey;
+  background-color: white;
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -45,11 +45,13 @@ footer.page-footer {
 .toggle-switches span {
   padding: 5px 20px 5px 20px;
   border: 1px solid black;
+  color: red;
 }
 
 .toggle-switches span:hover {
-  background-color: black;
+  background-color: red;
   cursor: pointer;
+  color: white;
 }
 
 .card {
@@ -71,6 +73,16 @@ footer.page-footer {
 .calendar td {
   border: 1px solid black;
   background-color: white;
+}
+
+table{
+  table-layout: fixed;
+  
+}
+
+tbody{
+  overflow-y: scroll;
+  height: 100%;
 }
 
 .calendar td:hover {
@@ -97,7 +109,7 @@ footer.page-footer {
 
 .date {
   font-size: 16px;
-  position: absolute;
+  position:absolute;
   top: 0px;
   right: 0px;
 }
@@ -108,15 +120,13 @@ ul {
   padding: 0px 5px 0px 20px;
 }
 
-
-
 .prevNext {
   border: 1px solid black;
   width: 100%;
   display: flex;
   justify-content: end;
   color: white;
-  background-color: red;
+  background-color: rgb(214, 4, 4);
 }
 
 .prevNextBtn {
@@ -131,4 +141,8 @@ ul {
 
 .clearfix {
   margin: 15px;
+}
+
+.grid-toggle {
+  background-color: white;
 }
