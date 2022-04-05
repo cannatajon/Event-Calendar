@@ -141,6 +141,8 @@ def next_month(d):
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
 
+def profile(request):
+    return render(request, 'profile.html')
 
 class EventCreate(LoginRequiredMixin, CreateView):
     model = Event
@@ -149,3 +151,4 @@ class EventCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+

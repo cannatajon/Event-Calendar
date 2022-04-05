@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.urls import path
 from . import views
 
@@ -12,5 +13,7 @@ urlpatterns = [
 
     # For Django Auth
     path('accounts/signup/', views.signup, name='signup'),
+
+    
 
 ]
