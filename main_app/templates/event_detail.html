@@ -28,7 +28,9 @@
                 <p>Uploaded By: {{ event.created_by }}</p>
                 <br />
                 {% for tag in event.tags.all %}
-                <div class="chip">{{ tag.name }}</div>
+                <a href="{% url 'search' %}?q={{tag.name}}"
+                    ><div class="chip">{{ tag.name }}</div></a
+                >
                 {% endfor %}
             </div>
         </div>

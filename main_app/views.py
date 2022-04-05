@@ -1,6 +1,7 @@
 
 import json
 import calendar
+import os
 from pprint import pprint
 import requests
 from socket import create_server
@@ -68,15 +69,16 @@ def event_detail(request, event_id):
 
     url = f"https://www.eventbriteapi.com/v3/events/{e.eventbrite_id}/structured_content/?purpose=listing"
     headers = {
-        'Authorization': 'Bearer 7QG2FHFSTJBUM2ABNPKC'
+        'Authorization': f"Bearer {os.getenv('EVENTBRITE_API_KEY')}"
     }
     response = requests.get(url, headers=headers)
     data = json.loads(response.text)
-    pprint(data)
     details = data['modules']
-    # print(details)
     for detail in details:
-        detail_items.append(detail['data']['body']['text'])
+        try:
+            detail_items.append(detail['data']['body']['text'])
+        except KeyError:
+            pass
 
     context = {'event': e, 'details': detail_items}
     return render(request, 'event_detail.html', context)
