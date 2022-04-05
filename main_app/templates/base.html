@@ -57,9 +57,7 @@
              <li>
               <a href="{% url 'search' %}">Search Events</a>
              </li>
-            <li>
-              <a href="{% url 'about' %}">About</a>
-            </li>
+            
             <li>
               <a href="{% url 'logout' %}">Logout</a>
             </li>
@@ -68,6 +66,9 @@
             Welcome {{user.username}}
 
             {% else %}
+            <li>
+              <a href="{% url 'about' %}">About</a>
+            </li>
 
             <li>
               <a href="{% url 'login' %}">Login</a>

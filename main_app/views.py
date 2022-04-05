@@ -26,10 +26,11 @@ from .utils import Calendar
 
 # Create your views here.
 
-
+@login_required
 def home(req):
     return render(req, "home.html")
 
+@login_required
 def search(req):
     events = []
     cities = ["toronto", "montreal", "calgary", "ottawa", "edmonton",
@@ -56,15 +57,6 @@ def search(req):
     })
 
 
-# not sure if this willa ctually help but
-# This can be used for later when we create an event view
-# so whoever makes the event it will be stored as thier id in the database (we can use this for when we create the calander view as well):
-# def form_valid(self, form):
-#     form.instance.user = self.request.user
-#     return super().form_valid(form)
-
-
-
 def signup(request):
     error_message = ''
     if request.method == 'POST':
@@ -78,11 +70,13 @@ def signup(request):
     form = UserCreationForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
+
+@login_required
 def grid_view(req):
     return render(req, 'grid_view.html')
 
 
-class CalendarView(generic.ListView):
+class CalendarView(LoginRequiredMixin, generic.ListView):
     model = Event
     template_name = 'grid_view.html'
 
