@@ -1,6 +1,8 @@
 
+import json
 import calendar
-
+import os
+import requests
 import uuid
 import boto3
 from urllib import response
@@ -11,7 +13,6 @@ from urllib import request, response
 
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .forms import EventForm
@@ -40,8 +41,6 @@ from django.views.generic.edit import DeleteView, UpdateView
 
 S3_BASE_URL = 'https://s3-ca-central-1.amazonaws.com/'
 BUCKET = 'eventcalendar2'
-
-# Create your views here.
 
 def home(req):
     return render(req, "home.html")
@@ -75,10 +74,24 @@ def search(req):
 
 
 def event_detail(request, event_id):
-
+    detail_items = []
     e = Event.objects.get(id=event_id)
 
-    return render(request, 'event_detail.html', {'event': e})
+    url = f"https://www.eventbriteapi.com/v3/events/{e.eventbrite_id}/structured_content/?purpose=listing"
+    headers = {
+        'Authorization': f"Bearer {os.getenv('EVENTBRITE_API_KEY')}"
+    }
+    response = requests.get(url, headers=headers)
+    data = json.loads(response.text)
+    details = data['modules']
+    for detail in details:
+        try:
+            detail_items.append(detail['data']['body']['text'])
+        except KeyError:
+            pass
+
+    context = {'event': e, 'details': detail_items}
+    return render(request, 'event_detail.html', context)
 
 
 def add_to_calendar(request, event_id):
