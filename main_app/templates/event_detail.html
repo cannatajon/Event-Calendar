@@ -1,0 +1,41 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="row">
+    <div class="col s12 m12">
+        <div class="card">
+            <div class="card-image">
+                <img src="{{event.image}}" />
+                <a
+                    href="{% url 'add_to_calendar' event.id %}"
+                    class="btn-floating halfway-fab waves-effect waves-light red tooltipped"
+                    data-tooltip="Add to calendar"
+                    data-position="top"
+                    ><i class="material-icons">add</i></a
+                >
+            </div>
+            <div class="card-content">
+                <span class="card-title">{{ event.title }}</span>
+                {% for detail in details %} {{ detail|safe }} {% endfor %}
+                <br />
+                <p>Starts: {{ event.start_time }}</p>
+                <p>Ends: {{ event.end_time }}</p>
+                <p>
+                    Venue: {% for venue in event.venue.values %}{{venue.name}}
+                    -- {{venue.address}}, {{venue.city|title}} {%endfor %}
+                </p>
+                <br />
+                <p>Who's going: {{ event.attendees.all|join:', ' }}</p>
+                <p>Uploaded By: {{ event.created_by }}</p>
+                <br />
+                {% for tag in event.tags.all %}
+                <a href="{% url 'search' %}?q={{tag.name}}"
+                    ><div class="chip">{{ tag.name }}</div></a
+                >
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+ß {% endblock content %}
+

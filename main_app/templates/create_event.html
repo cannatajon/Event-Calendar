@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% block content %}
+<h3>Add event</h3>
+<form method="post" action="{% url 'add_event'%}">
+  {%csrf_token%} {{event_form.as_p}}
+  <input type="submit" value="Add to Calendar" />
+</form>
+<style>
+  body {
+    color: black;
+  }
+</style>
+
+<script>
+  var startDateEl = document.getElementById("id_start_time");
+  var endDateEl = document.getElementById("id_end_time");
+
+  M.Datepicker.init(startDateEl, {
+    format: "yyyy-mm-dd",
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true,
+  });
+  M.Datepicker.init(endDateEl, {
+    format: "yyyy-mm-dd",
+    defaultDate: new Date(),
+    setDefaultDate: true,
+  });
+</script>
+{% endblock %}
