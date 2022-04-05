@@ -28,4 +28,9 @@ class Event(models.Model):
     user = models.ManyToManyField(User)
 
 
-   
+class Profile(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    profile_pic = models.CharField(default='https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg', blank=True, null=True, max_length=3000)
+    bio = models.TextField(default='edit my bio', max_length=250)
+    def __str__(self):
+        return self.user.username

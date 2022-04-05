@@ -9,7 +9,10 @@ urlpatterns = [
  #For Django Auth
     path('accounts/signup/', views.signup, name='signup'),
 
-    
+    #profile page urls
+    path('profile/',views.profile, name='profile'),
+    path('profile/<int:pk>/delete/', views.DeleteUser.as_view(), name = 'user_delete'),
+    path('profile/<int:pk>/update/', views.editProfile.as_view(), name = 'edit_profile'),
 
 ]
 
