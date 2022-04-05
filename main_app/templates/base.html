@@ -1,99 +1,80 @@
 {%load static%}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-        />
-        <link
-            href="https://fonts.googleapis.com/icon?family=Material+Icons"
-            rel="stylesheet"
-        />
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="{% static 'css/style.css'%}"
-        />
-        <script
-            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"
-        ></script>
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link
+		rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+	/>
+	<link
+		href="https://fonts.googleapis.com/icon?family=Material+Icons"
+		rel="stylesheet"
+	/>
+	<link
+		rel="stylesheet"
+		type="text/css"
+		href="{% static 'css/style.css'%}"
+	/>
+	<script
+		src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"
+	></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"
+	></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"
+	></script>
 
 
-        <title>Event Calendar</title>
-    </head>
-    <body>
-        <header navbar-fixed>
-            <nav>
-                <div class="nav-wrapper grey darken-4">
-                    <ul>
-                        <li>
-                            <a href="/" class="left brand-logo">Calendar.io</a>
-                        </li>
+	<title>Event Calendar</title>
+</head>
+<body>
+	<header navbar-fixed>
+		<nav>
+			<div class="nav-wrapper grey darken-4">
 
+				<a href="/" class="left brand-logo">Calendar.io</a>
 
-          <ul class="right">
+				<ul class="right">
 
-            {% if user.is_authenticated %}
+					{% if user.is_authenticated %}
+					<li><a href="{%url 'event_create'%}">Add Event</a></li>
+					<li><a href="{% url 'search' %}">Search Events</a></li>
+					<li><a href="#">My Events</a></li>
+					<li><a href="{% url 'logout' %}">Logout</a></li>
 
-            <li>
-              <a href="{%url 'event_create'%}">Add Event</a>
-            </li>
-             <li>
-              <a href="{% url 'search' %}">Search Events</a>
-             </li>
-            <li>
-              <a href="#">My Events</a>
-            </li>
-            <li>
-              <a href="{% url 'logout' %}">Logout</a>
-            </li>
+					Welcome {{user.username}}
 
+					{% else %}
 
-            Welcome {{user.username}}
+					<li><a href="{% url 'login' %}">Login</a></li>
+					<li><a href="{% url 'signup' %}">Sign up</a></li>
 
-            {% else %}
+					{% endif %}
 
-            <li>
-              <a href="{% url 'login' %}">Login</a>
-            </li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+				
+	<main class="container">{% block content %} {% endblock %}</main>
 
-            <li>
-              <a href="{% url 'signup' %}">Sign up</a>
-            </li>
-
-            {% endif %}
-
-          </ul>
-        </div>
-      </nav>
-    </header>
-
-                        
-
-        <main class="container">{% block content %} {% endblock %}</main>
-
-        <footer class="page-footer grey darken-4">
-            <div class="right text-white">
-                All Rights Reserved, &copy; 2022 Calendar.io
-            </div>
-        </footer>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script src={% static 'js/main.js' %}></script>
-    </body>
+	<footer class="page-footer grey darken-4">
+		<div class="right text-white">
+			All Rights Reserved, &copy; 2022 Calendar.io
+		</div>
+	</footer>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src={% static 'js/main.js' %}></script>
+</body>
 </html>
