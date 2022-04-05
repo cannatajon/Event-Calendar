@@ -1,17 +1,20 @@
 
 import calendar
+from socket import create_server
 from urllib import response
 from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from .forms import StartEnd
 
-#we import these to secure the url paths
+# we import these to secure the url paths
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
- #and we write these to secure them : 
- # @login_required above functions as a decoration and 
- # LoginRequiredMixin i.e somethingUpdate(LoginRequiredMixin, UpdateView)
+# and we write these to secure them :
+# @login_required above functions as a decoration and
+# LoginRequiredMixin i.e somethingUpdate(LoginRequiredMixin, UpdateView)
 
 from datetime import date, datetime, timedelta
 from django.shortcuts import render, redirect
@@ -21,7 +24,6 @@ from django.utils.safestring import mark_safe
 from django.db.models import Q
 from .models import *
 from .utils import Calendar
-
 
 
 # Create your views here.
@@ -37,7 +39,8 @@ def search(req):
               "mississauga", "winnipeg", "vancouver", "brampton", "quebec"]
 
     search_term = req.GET.get("q") if req.GET.get("q") else ""
-    search_locations = req.GET.getlist("cities") if req.GET.getlist("cities") else cities
+    search_locations = req.GET.getlist(
+        "cities") if req.GET.getlist("cities") else cities
 
     if len(search_term) > 0:
         events = Event.objects.filter(
@@ -57,13 +60,30 @@ def search(req):
     })
 
 
+def event_detail(request, event_id):
+
+    e = Event.objects.get(id=event_id)
+
+    return render(request, 'event_detail.html', {'event': e})
+
+
+def add_to_calendar(request, event_id):
+    e = Event.objects.get(id=event_id)
+
+    if request.method == 'POST':
+        e.attendees.add(request.user.id)
+        return redirect('event_detail', e.id)
+
+    return render(request, 'confirm_add_to_cal.html', {'event': e})
+
+    return
+
 # not sure if this willa ctually help but
 # This can be used for later when we create an event view
 # so whoever makes the event it will be stored as thier id in the database (we can use this for when we create the calander view as well):
 # def form_valid(self, form):
 #     form.instance.user = self.request.user
 #     return super().form_valid(form)
-
 
 
 def signup(request):
@@ -79,6 +99,8 @@ def signup(request):
     form = UserCreationForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
+
+
 def grid_view(req):
     return render(req, 'grid_view.html')
 
@@ -121,3 +143,12 @@ def next_month(d):
 
 def profile(request):
     return render(request, 'profile.html')
+
+class EventCreate(LoginRequiredMixin, CreateView):
+    model = Event
+    fields = ['title', 'description', 'start_time', 'end_time']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+

@@ -24,8 +24,9 @@ class Event(models.Model):
     image = models.URLField(max_length=500, blank=True)
     tags = models.ManyToManyField(Tag)
     venue = models.ManyToManyField(Venue)
-    created_user = models.IntegerField(default=0)
-    user = models.ManyToManyField(User)
 
+    attendees = models.ManyToManyField(User, blank=True, related_name="attendees")
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=1)  # user id 1 is eventbrite
 
-   
+    def __str__(self):
+        return str(self.id) + ' - ' + self.title
