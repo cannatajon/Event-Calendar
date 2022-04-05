@@ -1,6 +1,6 @@
 
 import calendar
-from socket import create_server
+
 from urllib import response
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -24,7 +24,7 @@ from django.utils.safestring import mark_safe
 from django.db.models import Q
 from .models import *
 from .utils import Calendar
-
+from django.views.generic.edit import DeleteView, UpdateView
 
 # Create your views here.
 
@@ -93,6 +93,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            Profile.objects.create(user=user)
             return redirect('home')
         else:
             error_message = 'Uh Oh - Sign up failed - please try again'
@@ -142,6 +143,21 @@ def next_month(d):
     return month
 
 def profile(request):
+
+    #my_events = Event.objects.get(created_user=request.user.id)
+    #attending = Event.objects.get(user=request.user.id)
+    profile = Profile.objects.get(user=request.user)
+    return render(request, 'profile.html', {'profile': profile})
+
+class DeleteUser(LoginRequiredMixin, DeleteView):
+    model = User
+    success_url = '/'
+
+class editProfile(LoginRequiredMixin, UpdateView):
+    model = Profile
+    fields = ['profile_pic', 'bio']
+    success_url = '/profile/'
+
     return render(request, 'profile.html')
 
 class EventCreate(LoginRequiredMixin, CreateView):
