@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta
 from calendar import HTMLCalendar
+from webbrowser import get
 from .models import Event
+import main_app.views
 
 
 class Calendar(HTMLCalendar):
@@ -27,6 +29,7 @@ class Calendar(HTMLCalendar):
         return f'<tr> {week} </tr>'
 
     def formatmonth(self, withyear=True):
+        print(main_app.views.currentUser)
         events = Event.objects.filter(
             start_time__year=self.year, start_time__month=self.month)
 

@@ -83,10 +83,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
 
         'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT')
+        # 'USER': os.getenv('DB_USER'),
+        # 'PASSWORD': os.getenv('DB_PASSWORD'),
+        # 'HOST': os.getenv('DB_HOST'),
+        # 'PORT': os.getenv('DB_PORT')
 
     }
 }
@@ -128,11 +128,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-#I have it set to redirect the home page rigt now but we can change it to anyother page just let me know what you guys would prefer
+# I have it set to redirect the home page rigt now but we can change it to anyother page just let me know what you guys would prefer
 LOGIN_REDIRECT_URL = '/'
 
 # same thing as above, we can change this to a different page later if you guys want, like an about page or something
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/about'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

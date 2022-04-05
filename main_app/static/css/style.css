@@ -10,7 +10,9 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+
   color: black;
+
 }
 
 main {
@@ -56,12 +58,14 @@ footer.page-footer {
 
 .card {
   color: black;
-  height: 320px;
 }
 
-.card img {
-  width: 100%;
+.card-content p::after {
+  content: "\A";
+  white-space: pre-wrap;
 }
+
+
 .calendar {
   width: 100%;
   margin: auto;
