@@ -41,7 +41,7 @@
 <body>
 	<header navbar-fixed>
 		<nav>
-			<div class="nav-wrapper grey darken-4">
+			<div class="nav-wrapper red darken-4">
 
 				<a href="/" class="left brand-logo">Calendar.io</a>
 
@@ -53,10 +53,10 @@
 					<li><a href="#">My Events</a></li>
 					<li><a href="{% url 'logout' %}">Logout</a></li>
 
-					<li><a href="{% url 'profile' %}">Welcome {{user.username}}</a></li>
+					<li><a href="{% url 'profile' %}"><div class="marty">Welcome {{user.username}} <div><span><img class="n-img" src="{{user.profile.profile_pic}}"/></span></div></div></a></li> 
 
 					{% else %}
-          <li><a href="{% url 'about' %}">About</a></li>
+          			<li><a href="{% url 'about' %}">About</a></li>
 					<li><a href="{% url 'login' %}">Login</a></li>
 					<li><a href="{% url 'signup' %}">Sign up</a></li>
 
@@ -69,8 +69,8 @@
 				
 	<main class="container">{% block content %} {% endblock %}</main>
 
-	<footer class="page-footer grey darken-4">
-		<div class="right text-white">
+	<footer class="page-footer red darken-4">
+		<div class="foot right text-white">
 			All Rights Reserved, &copy; 2022 Calendar.io
 		</div>
 	</footer>
