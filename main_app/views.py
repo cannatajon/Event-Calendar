@@ -80,6 +80,7 @@ def search(req):
 def event_detail(request, event_id):
     detail_items = []
     e = Event.objects.get(id=event_id)
+    user = request.user
 
     url = f"https://www.eventbriteapi.com/v3/events/{e.eventbrite_id}/structured_content/?purpose=listing"
     headers = {
@@ -95,7 +96,7 @@ def event_detail(request, event_id):
         except KeyError:
             pass
 
-    context = {'event': e, 'details': detail_items}
+    context = {'event': e, 'details': detail_items, 'user': user}
     return render(request, 'event_detail.html', context)
 
 
@@ -107,6 +108,16 @@ def add_to_calendar(request, event_id):
         return redirect('event_detail', e.id)
 
     return render(request, 'confirm_add_to_cal.html', {'event': e})
+
+
+def remove_from_calendar(request, event_id):
+    e = Event.objects.get(id=event_id)
+
+    if request.method == 'POST':
+        e.attendees.remove(request.user)
+        return redirect('event_detail', e.id)
+
+    return render(request, 'confirm_remove_from_cal.html', {'event': e})
 
 # not sure if this willa ctually help but
 # This can be used for later when we create an event view
@@ -224,11 +235,11 @@ def about(request):
 
 
 def profile(request):
-
-    # my_events = Event.objects.get(created_user=request.user.id)
-    # attending = Event.objects.get(user=request.user.id)
+    user = request.user
+    myEvents = Event.objects.filter(created_by=request.user)
+    allEvents = Event.objects.filter(attendees=request.user)
     profile = Profile.objects.get(user=request.user)
-    return render(request, 'profile.html', {'profile': profile})
+    return render(request, 'profile.html', {'profile': profile, 'user': user, 'my_events': myEvents, 'all_events': allEvents})
 
 
 def add_photo(request, profile_id):
