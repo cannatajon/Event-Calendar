@@ -44,7 +44,9 @@
 	<header navbar-fixed>
 		<nav>
 			<div class="nav-wrapper grey darken-4">
-
+				{% if user.is_authenticated %}
+				<img class="profile-avatar" src="{{user.profile.profile_pic}}" alt="">
+				{% endif %}
 				<a href="/" class="left brand-logo">Calendar.io</a>
 
 				<ul class="right">
