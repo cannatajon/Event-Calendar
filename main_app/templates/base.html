@@ -58,7 +58,7 @@
 					<li><a href="{% url 'profile' %}">Welcome {{user.username}}</a></li>
 
 					{% else %}
-
+          <li><a href="{% url 'about' %}">About</a></li>
 					<li><a href="{% url 'login' %}">Login</a></li>
 					<li><a href="{% url 'signup' %}">Sign up</a></li>
 
