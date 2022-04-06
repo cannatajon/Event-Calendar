@@ -283,6 +283,11 @@ class DeleteUser(LoginRequiredMixin, DeleteView):
     success_url = '/'
 
 
+class DeleteEvent(LoginRequiredMixin, DeleteView):
+    model = Event
+    success_url = '/'
+
+
 class editProfile(LoginRequiredMixin, UpdateView):
     model = Profile
     fields = ['profile_pic', 'bio']

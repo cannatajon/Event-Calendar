@@ -11,8 +11,17 @@ urlpatterns = [
 
     path('events/create', views.event_create, name="event_create"),
     path('events/<int:event_id>/', views.event_detail, name='event_detail'),
+<<<<<<< HEAD
     path('events/<int:event_id>/addtocalendar', views.add_to_calendar, name='add_to_calendar'),
     path('events/<int:event_id>/removefromcalendar', views.remove_from_calendar, name='remove_from_calendar'),
+=======
+    path('events/<int:event_id>/addtocalendar',
+         views.add_to_calendar, name='add_to_calendar'),
+    path('events/<int:event_id>/removefromcalendar',
+         views.remove_from_calendar, name='remove_from_calendar'),
+    path('events/<int:pk>/delete',
+         views.DeleteEvent.as_view(), name='delete_event'),
+>>>>>>> eb8548e9512a8d2bd3367d713401803bbc74ce53
     path('events/addevent', views.add_event, name='add_event'),
 
 
