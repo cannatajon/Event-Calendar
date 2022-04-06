@@ -89,8 +89,7 @@ tbody{
 }
 
 .calendar td:hover {
-  background-color: white;
-  cursor: pointer;
+  background-color: rgb(208, 208, 208, .5);
 }
 
 .calendar th {
@@ -148,4 +147,11 @@ ul {
 
 .grid-toggle {
   background-color: white;
+}
+
+li{
+  margin: 5px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: rgba(255, 0, 0, 0.3);
 }

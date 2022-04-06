@@ -3,14 +3,13 @@
 <hr />
 
 <style>
-    
-    body{
-        background-image: url(../static/img/o.png);
-        height: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
+  body {
+    background-image: url(../static/img/o.png);
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 </style>
 <div class="toggle-switches">
   <a href="/gridview"><span class="grid-toggle">Grid View</span></a>
@@ -18,6 +17,16 @@
   <a href="/"><span>List View</span></a>
 </div>
 <div class="toggle-view">{{calendar}}</div>
+
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4>{{event.title}}</h4>
+    <p>A bunch of text</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close btn-flat">Close</a>
+  </div>
+</div>
 
 <div class="prevNext">
   <a class="prevNextBtn" href="{% url 'grid_view' %}?{{ prev_month }}">
