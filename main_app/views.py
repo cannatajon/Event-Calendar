@@ -82,30 +82,34 @@ def event_detail(request, event_id):
     e = Event.objects.get(id=event_id)
     user = request.user
 
-    url = f"https://www.eventbriteapi.com/v3/events/{e.eventbrite_id}/structured_content/?purpose=listing"
-    headers = {
-        'Authorization': f"Bearer {os.getenv('EVENTBRITE_API_KEY')}"
-    }
-    response = requests.get(url, headers=headers)
-    data = json.loads(response.text)
-    print(data)
-    details = data['modules']
-    for detail in details:
-        try:
-            detail_items.append(detail['data']['body']['text'])
-        except KeyError:
-            pass
+    try:
+        url = f"https://www.eventbriteapi.com/v3/events/{e.eventbrite_id}/structured_content/?purpose=listing"
+        headers = {
+            'Authorization': f"Bearer {os.getenv('EVENTBRITE_API_KEY')}"
+        }
+        response = requests.get(url, headers=headers)
+        data = json.loads(response.text)
+        details = data['modules']
+
+        for detail in details:
+            try:
+                detail_items.append(detail['data']['body']['text'])
+            except KeyError:
+                pass
+    except:
+        pass
 
     context = {'event': e, 'details': detail_items, 'user': user}
     return render(request, 'event_detail.html', context)
 
 
+@login_required
 def add_to_calendar(request, event_id):
     e = Event.objects.get(id=event_id)
 
     if request.method == 'POST':
         e.attendees.add(request.user)
-        return redirect('event_detail', e.id)
+        return redirect('grid_view')
 
     return render(request, 'confirm_add_to_cal.html', {'event': e})
 
