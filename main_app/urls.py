@@ -5,8 +5,9 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('gridview/', views.CalendarView.as_view(), name='grid_view'),
-    path('search/', views.search, name='search'),
+    path('pinview/', views.pin_view, name="pin_view"),
 
+    path('search/', views.search, name='search'),
 
     path('events/create', views.event_create, name="event_create"),
     path('events/<int:event_id>/', views.event_detail, name='event_detail'),

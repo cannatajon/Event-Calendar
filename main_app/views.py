@@ -66,7 +66,8 @@ def search(req):
             Q(tags__name__icontains=search_term) |
             Q(venue__name__icontains=search_term) |
             Q(venue__address__icontains=search_term),
-            Q(venue__city__in=search_locations)
+            Q(venue__city__in=search_locations) |
+            Q(eventbrite_id__lt=10000)
         ).distinct()
 
     return render(req, "search.html", {
@@ -150,6 +151,15 @@ def signup(request):
 @login_required
 def grid_view(req):
     return render(req, 'grid_view.html')
+
+
+@login_required
+def pin_view(req):
+
+    events = Event.objects.filter(attendees=req.user).order_by('start_time')
+
+    context = {'events': events}
+    return render(req, 'pin_view.html', context)
 
 
 class Calendar(HTMLCalendar):
