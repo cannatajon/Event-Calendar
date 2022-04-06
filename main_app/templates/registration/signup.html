@@ -8,11 +8,11 @@
     <p class="red-text">{{ error_message }}</p>
 {% endif %}
 
-<form action="{% url 'signup' %}" method="post" class=" light-blue accent-3">
+<form action="{% url 'signup' %}" method="post">
 
     {% csrf_token %}
     {{form.as_p}}
-    <input type="submit" value="signup" class="yellow btn" >
+    <input type="submit" value="signup" class="red btn" >
 
 </form>
 

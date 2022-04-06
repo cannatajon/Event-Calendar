@@ -46,7 +46,9 @@ footer.page-footer {
 .toggle-switches span {
   padding: 5px 20px 5px 20px;
   border: 1px solid black;
-  color: red;
+  border-radius: 5px;
+  color: black;
+  margin: 5px;
 }
 
 .toggle-switches span:hover {
@@ -64,12 +66,25 @@ footer.page-footer {
   white-space: pre-wrap;
 }
 
+.marty{
+  display:flex;
+  align-items: center;
+}
+
+.n-img{
+  height: 16px;
+  width: 16px;
+  margin-left: 5px;
+  border-radius: 6px;
+  
+}
 
 .calendar {
   width: 100%;
   margin: auto;
   font-size: 13px;
   margin-bottom: 40px;
+  border-style: inset;
 }
 
 .calendar tr,
@@ -102,7 +117,6 @@ tbody{
   width: 200px;
   height: 150px;
   padding: 20px 0px 0px 5px;
-  position: relative;
 }
 
 .month {
@@ -112,8 +126,12 @@ tbody{
 .date {
   font-size: 16px;
   position:absolute;
-  top: 0px;
-  right: 0px;
+  top: -90px;
+  right: 5px;
+}
+
+.calendar td div {
+  position: relative;
 }
 
 ul {
@@ -138,6 +156,7 @@ ul {
   box-shadow: 0 0 0 0;
   padding: 0;
   border: 1px solid black;
+  border-radius: 5px;
   margin: 5px;
 }
 
@@ -146,7 +165,17 @@ ul {
 }
 
 .grid-toggle {
-  background-color: white;
+  background-color: red;
+  color: white;
+}
+
+.brand-logo{
+  margin-left: 5px;
+}
+
+.foot{
+  margin-right: 10px;
+
 }
 
 li{
