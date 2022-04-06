@@ -11,7 +11,7 @@
                     src="{% static 'img/img-default.png' %}"
                     style="width: 10%; margin-left: 30px"
                 />
-                {% endif %}
+                {% endif %} {%if user not in event.attendees.all%}
                 <a
                     href="{% url 'add_to_calendar' event.id %}"
                     class="btn-floating halfway-fab waves-effect waves-light red tooltipped"
@@ -19,6 +19,15 @@
                     data-position="top"
                     ><i class="material-icons">add</i></a
                 >
+                {%else%}
+                <a
+                    href="{% url 'remove_from_calendar' event.id %}"
+                    class="btn-floating halfway-fab waves-effect waves-light red tooltipped"
+                    data-tooltip="Remove from calendar"
+                    data-position="top"
+                    ><i class="material-icons">remove</i></a
+                >
+                {% endif %}
             </div>
             <div class="card-content">
                 <span class="card-title">{{ event.title }}</span>
@@ -27,8 +36,8 @@
                 <p>Starts: {{ event.start_time }}</p>
                 <p>Ends: {{ event.end_time }}</p>
                 <p>
-                    Location: {% for venue in event.venue.values%}
-                    {{venue.name}} -- {{venue.address}}, {{venue.city|title}}
+                    Location: {% for venue in event.venue.values
+                    %}{{venue.name}} -- {{venue.address}}, {{venue.city|title}}
                     {%endfor %}
                 </p>
                 <br />
