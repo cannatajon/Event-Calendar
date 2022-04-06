@@ -36,9 +36,8 @@
                 <p>Starts: {{ event.start_time }}</p>
                 <p>Ends: {{ event.end_time }}</p>
                 <p>
-                    Location: {% for venue in event.venue.values
-                    %}{{venue.name}} -- {{venue.address}}, {{venue.city|title}}
-                    {%endfor %}
+                    Location: {% for venue in event.venue.values%}{{venue.name}}
+                    -- {{venue.address}}, {{venue.city|title}} {%endfor %}
                 </p>
                 <br />
                 <p>Who's going: {{ event.attendees.all|join:', ' }}</p>
