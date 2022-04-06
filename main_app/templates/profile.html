@@ -1,9 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 
-<h1>profile page</h1>
-
-<h6>username: {{user.username}}</h6>
-<h6>email: {{user.email}}</h6>
+<h3>{{user}}</h3>
 
 <a href="{% url 'user_delete' user.id %}">delete account</a>
 <a href="{% url 'edit_profile' profile.id %}">edit profile</a>
@@ -14,19 +11,69 @@
 <img src="{{user.profile.profile_pic}}" width="50" height="60" />
 
 <form
-    action="{% url 'add_photo' profile.id %}"
-    enctype="multipart/form-data"
-    method="POST"
-    class="card-panel"
+  action="{% url 'add_photo' profile.id %}"
+  enctype="multipart/form-data"
+  method="POST"
+  class="card-panel"
 >
-    {% csrf_token %}
-    <input type="file" name="photo-file" />
-    <br /><br />
-    <input type="submit" class="btn" value="Change Photo" />
+  {% csrf_token %}
+  <input type="file" name="photo-file" />
+  <br /><br />
+  <input type="submit" class="btn" value="Change Photo" />
 </form>
 
 <h3>events you created</h3>
 
+{% for event in my_events %}
+
+<a href="{% url 'event_detail' event.id %}">
+  <div class="row card horizontal valign-wrapper">
+    <div class="col s4 card-image">
+      <img class="responsive-img" src="{{ event.image }}" />
+    </div>
+    <div class="col s8 card-content grey-text text-darken-4">
+      <span class="card-title">{{ event.title }}</span>
+      <p>{{ event.start_time }} - {{ event.end_time }}</p>
+      <p>{{ event.description }}</p>
+      {% for venue in event.venue.all %}
+      <p>{{ venue.city|title }}</p>
+      <small>{{venue.name}} - {{venue.address}}</small>
+      {% endfor %}
+      <div>
+        {% for tag in event.tags.all %}
+        <div class="chip">{{ tag.name }}</div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</a>
+
+{% endfor %}
+
 <h3>events you are attending</h3>
 
-{% endblock %}
+{% for event in all_events %}
+
+<a href="{% url 'event_detail' event.id %}">
+  <div class="row card horizontal valign-wrapper">
+    <div class="col s4 card-image">
+      <img class="responsive-img" src="{{ event.image }}" />
+    </div>
+    <div class="col s8 card-content grey-text text-darken-4">
+      <span class="card-title">{{ event.title }}</span>
+      <p>{{ event.start_time }} - {{ event.end_time }}</p>
+      <p>{{ event.description }}</p>
+      {% for venue in event.venue.all %}
+      <p>{{ venue.city|title }}</p>
+      <small>{{venue.name}} - {{venue.address}}</small>
+      {% endfor %}
+      <div>
+        {% for tag in event.tags.all %}
+        <div class="chip">{{ tag.name }}</div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</a>
+
+{% endfor %} {% endblock %}
