@@ -9,4 +9,4 @@ admin.site.register(Venue)
 admin.site.register(Tag)
 
 
-admin.site.register(Profile)]
+admin.site.register(Profile)
