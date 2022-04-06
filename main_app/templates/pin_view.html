@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block content %}
+<br />
+{% include 'toggle_switches_component.html' %} {% for event in events %}
+
+
+<a href="{% url 'event_detail' event.id %}">
+    <div class="row">
+        <div class="col s3">
+            <div class="card">
+                <div class="card-image">
+                    <img class="responsive-img" src="{{ event.image }}" />
+                </div>
+                <div class="card-content">
+                    <span style="font-size: 18px;" class="card-title">{{event.title|truncatechars:16}}</span>
+                    <p style="font-size: 14px;">{{ event.start_time }}</p>
+                    <div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
+
+{% endfor %} {% endblock content %}

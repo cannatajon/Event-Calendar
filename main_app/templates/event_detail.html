@@ -31,7 +31,9 @@
             </div>
             <div class="card-content">
                 <span class="card-title">{{ event.title }}</span>
-                {% for detail in details %} {{ detail|safe }} {% endfor %}
+                {% if details %} {% for detail in details %} {{ detail|safe }}
+                {% endfor %} {% else %} {{ event.description }} <br />
+                {% endif %}
                 <br />
                 <p>Starts: {{ event.start_time }}</p>
                 <p>Ends: {{ event.end_time }}</p>
