@@ -1,8 +1,18 @@
 {% extends 'base.html' %} {% block content %}
 <br />
-{% include 'toggle_switches_component.html' %} {% for event in events %}
-
-
+<style>
+    .grid-toggle {
+        background-color: red;
+        color: white;
+    }
+</style>
+<div class="toggle-switches">
+    <a href="/gridview"><span>Grid View</span></a>
+    <a href="/pinview"><span class="grid-toggle">Pin View</span></a>
+    <a href="/"><span>List View</span></a>
+</div>
+<br>
+{% for event in events %}
 <a href="{% url 'event_detail' event.id %}">
     <div class="row">
         <div class="col s3">
