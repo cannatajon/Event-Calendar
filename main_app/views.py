@@ -103,7 +103,7 @@ def add_to_calendar(request, event_id):
     e = Event.objects.get(id=event_id)
 
     if request.method == 'POST':
-        e.attendees.add(request.user.id)
+        e.attendees.add(request.user)
         return redirect('event_detail', e.id)
 
     return render(request, 'confirm_add_to_cal.html', {'event': e})
@@ -168,7 +168,7 @@ class Calendar(HTMLCalendar):
     def formatmonth(self, withyear=True):
         # print(self.request)
         events = Event.objects.filter(
-            start_time__year=self.year, start_time__month=self.month, created_by=self.user)
+            start_time__year=self.year, start_time__month=self.month, attendees=self.user)
 
         cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
         cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
@@ -282,6 +282,7 @@ def add_event(req):
         new_event = form.save(commit=False)
         new_event.created_by = req.user
         new_event.save()
+        new_event.attendees.add(req.user)
     return redirect('grid_view')
 
     # def form_valid(self, form):
