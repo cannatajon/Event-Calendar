@@ -52,7 +52,6 @@
 					{% if user.is_authenticated %}
 					<li><a href="{%url 'event_create'%}">Add Event</a></li>
 					<li><a href="{% url 'search' %}">Search Events</a></li>
-					<li><a href="#">My Events</a></li>
 					<li><a href="{% url 'logout' %}">Logout</a></li>
 
 					<li><a href="{% url 'profile' %}">Welcome {{user.username}}</a></li>

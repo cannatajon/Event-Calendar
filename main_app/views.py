@@ -80,33 +80,48 @@ def search(req):
 def event_detail(request, event_id):
     detail_items = []
     e = Event.objects.get(id=event_id)
+    user = request.user
 
-    url = f"https://www.eventbriteapi.com/v3/events/{e.eventbrite_id}/structured_content/?purpose=listing"
-    headers = {
-        'Authorization': f"Bearer {os.getenv('EVENTBRITE_API_KEY')}"
-    }
-    response = requests.get(url, headers=headers)
-    data = json.loads(response.text)
-    print(data)
-    details = data['modules']
-    for detail in details:
-        try:
-            detail_items.append(detail['data']['body']['text'])
-        except KeyError:
-            pass
+    try:
+        url = f"https://www.eventbriteapi.com/v3/events/{e.eventbrite_id}/structured_content/?purpose=listing"
+        headers = {
+            'Authorization': f"Bearer {os.getenv('EVENTBRITE_API_KEY')}"
+        }
+        response = requests.get(url, headers=headers)
+        data = json.loads(response.text)
+        details = data['modules']
 
-    context = {'event': e, 'details': detail_items}
+        for detail in details:
+            try:
+                detail_items.append(detail['data']['body']['text'])
+            except KeyError:
+                pass
+    except:
+        pass
+
+    context = {'event': e, 'details': detail_items, 'user': user}
     return render(request, 'event_detail.html', context)
 
 
+@login_required
 def add_to_calendar(request, event_id):
     e = Event.objects.get(id=event_id)
 
     if request.method == 'POST':
         e.attendees.add(request.user)
-        return redirect('event_detail', e.id)
+        return redirect('grid_view')
 
     return render(request, 'confirm_add_to_cal.html', {'event': e})
+
+
+def remove_from_calendar(request, event_id):
+    e = Event.objects.get(id=event_id)
+
+    if request.method == 'POST':
+        e.attendees.remove(request.user)
+        return redirect('event_detail', e.id)
+
+    return render(request, 'confirm_remove_from_cal.html', {'event': e})
 
 # not sure if this willa ctually help but
 # This can be used for later when we create an event view
@@ -152,7 +167,7 @@ class Calendar(HTMLCalendar):
         events_per_day = events.filter(start_time__day=day)
         d = ''
         for event in events_per_day:
-            d += f'<li> {event.title} </li>'
+            d += f'<a href="/events/{event.id}"><li> {event.title} </li></a>'
 
         if day != 0:
             return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"
@@ -185,13 +200,6 @@ class CalendarView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         currentUser = self.request.user
         context = super().get_context_data(**kwargs)
-
-        newArr = []
-        for i in context['event_list']:
-            if i.created_by == self.request.user:
-                newArr.append(i)
-
-        context['object_list'] = newArr
 
         d = get_date(self.request.GET.get('month', None))
         user = self.request.user
@@ -231,11 +239,11 @@ def about(request):
 
 
 def profile(request):
-
-    #my_events = Event.objects.get(created_user=request.user.id)
-    #attending = Event.objects.get(user=request.user.id)
+    user = request.user
+    myEvents = Event.objects.filter(created_by=request.user)
+    allEvents = Event.objects.filter(attendees=request.user)
     profile = Profile.objects.get(user=request.user)
-    return render(request, 'profile.html', {'profile': profile})
+    return render(request, 'profile.html', {'profile': profile, 'user': user, 'my_events': myEvents, 'all_events': allEvents})
 
 
 def add_photo(request, profile_id):
