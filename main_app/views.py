@@ -155,11 +155,18 @@ def grid_view(req):
 
 @login_required
 def pin_view(req):
-
     events = Event.objects.filter(attendees=req.user).order_by('start_time')
 
     context = {'events': events}
     return render(req, 'pin_view.html', context)
+
+
+@login_required
+def list_view(req):
+    events = Event.objects.filter(attendees=req.user).order_by('start_time')
+
+    context = {'events': events}
+    return render(req, 'list_view.html', context)
 
 
 class Calendar(HTMLCalendar):
