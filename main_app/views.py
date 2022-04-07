@@ -78,6 +78,7 @@ def search(req):
         "num_results": events.count
     })
 
+
 @login_required
 def event_detail(request, event_id):
     detail_items = []
@@ -114,6 +115,7 @@ def add_to_calendar(request, event_id):
         return redirect('grid_view')
 
     return render(request, 'confirm_add_to_cal.html', {'event': e})
+
 
 @login_required
 def remove_from_calendar(request, event_id):
@@ -258,6 +260,7 @@ def next_month(d):
 def about(request):
     return render(request, "about.html")
 
+
 @login_required
 def profile(request):
     user = request.user
@@ -265,6 +268,7 @@ def profile(request):
     allEvents = Event.objects.filter(attendees=request.user)
     profile = Profile.objects.get(user=request.user)
     return render(request, 'profile.html', {'profile': profile, 'user': user, 'my_events': myEvents, 'all_events': allEvents})
+
 
 @login_required
 def add_photo(request, profile_id):
@@ -304,10 +308,12 @@ class editProfile(LoginRequiredMixin, UpdateView):
     fields = ['profile_pic', 'bio']
     success_url = '/profile/'
 
+
 @login_required
 def event_create(req):
     event_form = EventForm()
     return render(req, 'create_event.html', {'event_form': event_form, 'colors': CSS_COLOR_NAMES, 'colorList': str(CSS_COLOR_NAMES)})
+
 
 @login_required
 def add_event(req):
