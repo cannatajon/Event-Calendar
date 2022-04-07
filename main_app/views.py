@@ -35,6 +35,7 @@ from django.views import generic
 from django.utils.safestring import mark_safe
 from django.db.models import Q
 from .models import *
+from .colors import CSS_COLOR_NAMES
 
 from .utils import Calendar
 from django.views.generic.edit import DeleteView, UpdateView
@@ -184,7 +185,10 @@ class Calendar(HTMLCalendar):
         events_per_day = events.filter(start_time__day=day)
         d = ''
         for event in events_per_day:
-            d += f'<a href="/events/{event.id}"><li> {event.title} </li></a>'
+            d += f'<a href="/events/{event.id}"><li style =  background-color:{event.color};> {event.title} </li></a>'
+            print(event.title)
+            print(event.color)
+            print(event.tags)
 
         if day != 0:
             return f"<td><div><span class='date'>{day}</span><ul class='ulcalendar'> {d} </ul></div></td>"
@@ -303,7 +307,7 @@ class editProfile(LoginRequiredMixin, UpdateView):
 
 def event_create(req):
     event_form = EventForm()
-    return render(req, 'create_event.html', {'event_form': event_form})
+    return render(req, 'create_event.html', {'event_form': event_form, 'colors': CSS_COLOR_NAMES, 'colorList': str(CSS_COLOR_NAMES)})
 
 
 def add_event(req):
@@ -311,6 +315,7 @@ def add_event(req):
     if form.is_valid():
         new_event = form.save(commit=False)
         new_event.created_by = req.user
+        new_event.color = req.POST['color']
         new_event.save()
         new_event.attendees.add(req.user)
     return redirect('grid_view')
