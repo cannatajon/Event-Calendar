@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
-from django.db.models import Model
 
 # Create your models here.
 
@@ -30,10 +29,10 @@ class Event(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     image = models.URLField(max_length=500, blank=True)
+    color = models.CharField(max_length=30, blank=True)
     tags = models.ManyToManyField(Tag)
     venue = models.ManyToManyField(Venue)
     location = models.CharField(max_length=50, blank=True)
-    color = models.CharField(max_length=30, blank=True)
 
     attendees = models.ManyToManyField(
         User, blank=True, related_name="attendees")
