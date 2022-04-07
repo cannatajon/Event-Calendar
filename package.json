@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "simplepicker": "^2.0.4"
+    "simplepicker": "^2.0.4",
+    "smart-webcomponents-community": "^13.1.1"
   }
 }

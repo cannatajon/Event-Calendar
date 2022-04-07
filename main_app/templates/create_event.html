@@ -2,6 +2,11 @@
 <h3>Add event</h3>
 <form method="post" action="{% url 'add_event'%}">
   {%csrf_token%} {{event_form.as_p}}
+  <select name="color">
+    {%for color in colors%}
+    <option value="{{color}}">{{color}}</option>
+    {% endfor %}
+  </select>
   <input type="submit" value="Add to Calendar" />
 </form>
 <style>
@@ -14,16 +19,24 @@
   var startDateEl = document.getElementById("id_start_time");
   var endDateEl = document.getElementById("id_end_time");
 
-  M.Datepicker.init(startDateEl, {
-    format: "yyyy-mm-dd",
-    defaultDate: new Date(),
-    setDefaultDate: true,
-    autoClose: true,
-  });
-  M.Datepicker.init(endDateEl, {
-    format: "yyyy-mm-dd",
-    defaultDate: new Date(),
-    setDefaultDate: true,
-  });
+  startDateEl.type = "datetime-local";
+  endDateEl.type = "datetime-local";
+  //   startDateEl.onchange = (evt) => changeStart();
+
+  //   function changeStart() {
+  //     M.Datepicker.init(startDateEl, {
+  //       format: "yyyy-mm-dd",
+  //       defaultDate: new Date(),
+  //       setDefaultDate: true,
+  //       autoClose: true,
+  //     });
+
+  //     let dateValue = startDateEl.value;
+  //     M.Timepicker.init(startDateEl);
+  //     let timeValue = startDateEl.value;
+  //     console.log(timeValue, dateValue);
+
+  //     //   MaterialDateTimePicker.init(startDateEl);
+  //   }
 </script>
 {% endblock %}

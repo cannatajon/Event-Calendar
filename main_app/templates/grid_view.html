@@ -1,37 +1,40 @@
 {% extends 'base.html' %} {% block content %}
 <h2 class="white-black">My Calendar</h2>
 <hr />
-
+<input type="hidden" value="{{colorList}}" id="string_colors" />
 <style>
-    .grid-toggle {
-        background-color: red;
-        color: white;
-    }
+  .grid-toggle {
+    background-color: red;
+    color: white;
+  }
 </style>
 <div class="toggle-switches">
-    <a href="/gridview"><span class="grid-toggle">Grid View</span></a>
-    <a href="/pinview"><span>Pin View</span></a>
-    <a href="/listview"><span>List View</span></a>
+  <a href="/gridview"><span class="grid-toggle">Grid View</span></a>
+  <a href="/pinview"><span>Pin View</span></a>
+  <a href="/listview"><span>List View</span></a>
 </div>
 <div class="toggle-view">{{calendar}}</div>
 
 <div id="modal1" class="modal">
-    <div class="modal-content">
-        <h4>{{event.title}}</h4>
-        <p>A bunch of text</p>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-close btn-flat">Close</a>
-    </div>
+  <div class="modal-content">
+    <h4>{{event.title}}</h4>
+    <p>A bunch of text</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close btn-flat">Close</a>
+  </div>
 </div>
 
 <div class="prevNext">
-    <a class="prevNextBtn" href="{% url 'grid_view' %}?{{ prev_month }}">
-        Previous Month
-    </a>
-    <a class="prevNextBtn" href="{% url 'grid_view' %}?{{ next_month }}">
-        Next Month
-    </a>
+  <a class="prevNextBtn" href="{% url 'grid_view' %}?{{ prev_month }}">
+    Previous Month
+  </a>
+  <a class="prevNextBtn" href="{% url 'grid_view' %}?{{ next_month }}">
+    Next Month
+  </a>
 </div>
-
+<script>
+  //   colors = JSON.parse(document.getElementById("string_colors"));
+  console.log(document.getElementById("string_colors").value);
+</script>
 {% endblock %}
