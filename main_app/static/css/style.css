@@ -126,7 +126,7 @@ tbody{
 }
 
 .date {
-  font-size: 16px;
+  font-size: 14px;
   position:absolute;
   top: -85px;
   right: 5px;
@@ -185,7 +185,7 @@ tbody{
 
 }
 
-li{
+.calendar li{
   margin: 5px;
   padding: 5px;
   border-radius: 10px;
@@ -219,4 +219,8 @@ nav{
 .propic{
   border: 5px ridge rgb(231, 20, 20);
   border-radius: 100px;
+}
+
+.calendar li{
+  color: black
 }

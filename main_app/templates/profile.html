@@ -1,28 +1,27 @@
 {% extends 'base.html' %} {%load static%} {% block content %}
 
- <h2 class="protext">{{user}}</h2>
-
+<h2 class="protext">{{user}}</h2>
 
 <div class="proimg">
-    <div class="propic">
-        <img src="{{user.profile.profile_pic}}" width="500" height="500" />
-    </div>  
-    <form
+  <div class="propic">
+    <img src="{{user.profile.profile_pic}}" width="500" height="500" />
+  </div>
+  <form
     action="{% url 'add_photo' profile.id %}"
     enctype="multipart/form-data"
     method="POST"
-    >
-        {% csrf_token %}
-        <input type="file" name="photo-file" />
-        
-        <input type="submit" value="Change Photo" />
-    </form>
+  >
+    {% csrf_token %}
+    <input type="file" name="photo-file" />
+
+    <input type="submit" value="Change Photo" />
+  </form>
 </div>
 <h4 class="protext">{{user.profile.bio}}</h4>
-<br>
+<br />
 <div class="probtn">
-    <a class="red btn" href="{% url 'edit_profile' profile.id %}">Edit profile</a>
-    <a class="red btn" href="{% url 'user_delete' user.id %}">Delete account</a> 
+  <a class="red btn" href="{% url 'edit_profile' profile.id %}">Edit profile</a>
+  <a class="red btn" href="{% url 'user_delete' user.id %}">Delete account</a>
 </div>
 
 <img src="{{user.profile.profile_pic}}" width="50" height="60" />
@@ -91,7 +90,7 @@
 
 {% endfor %}
 
-<h3>Events you are attending:</h3>
+<h3>events you are attending</h3>
 
 {% for event in all_events %}
 
