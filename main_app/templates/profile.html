@@ -1,26 +1,32 @@
 {% extends 'base.html' %} {%load static%} {% block content %}
 
-<h3>{{user}}</h3>
+ <h2 class="protext">{{user}}</h2>
 
-<a href="{% url 'user_delete' user.id %}">delete account</a>
-<a href="{% url 'edit_profile' profile.id %}">edit profile</a>
-<br /><br />
 
-{{user.profile.bio}}<br />
+<div class="proimg">
+    <div class="propic">
+        <img src="{{user.profile.profile_pic}}" width="500" height="500" />
+    </div>  
+    <form
+    action="{% url 'add_photo' profile.id %}"
+    enctype="multipart/form-data"
+    method="POST"
+    >
+        {% csrf_token %}
+        <input type="file" name="photo-file" />
+        
+        <input type="submit" value="Change Photo" />
+    </form>
+</div>
+<h4 class="protext">{{user.profile.bio}}</h4>
+<br>
+<div class="probtn">
+    <a class="red btn" href="{% url 'edit_profile' profile.id %}">Edit profile</a>
+    <a class="red btn" href="{% url 'user_delete' user.id %}">Delete account</a> 
+</div>
 
-<img src="{{user.profile.profile_pic}}" width="50" height="60" />
-
-<form
-  action="{% url 'add_photo' profile.id %}"
-  enctype="multipart/form-data"
-  method="POST"
-  class="card-panel"
->
-    {% csrf_token %}
-    <input type="file" name="photo-file" />
-    <br /><br />
-    <input type="submit" class="red btn" value="Change Photo" />
-</form>
+<br>
+<br>
 
 <h3>Events you created:</h3>
 
