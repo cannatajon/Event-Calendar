@@ -155,11 +155,18 @@ def grid_view(req):
 
 @login_required
 def pin_view(req):
-
     events = Event.objects.filter(attendees=req.user).order_by('start_time')
 
     context = {'events': events}
     return render(req, 'pin_view.html', context)
+
+
+@login_required
+def list_view(req):
+    events = Event.objects.filter(attendees=req.user).order_by('start_time')
+
+    context = {'events': events}
+    return render(req, 'list_view.html', context)
 
 
 class Calendar(HTMLCalendar):
@@ -180,7 +187,7 @@ class Calendar(HTMLCalendar):
             d += f'<a href="/events/{event.id}"><li> {event.title} </li></a>'
 
         if day != 0:
-            return f"<td><div><span class='date'>{day}</span><ul> {d} </ul></div></td>"
+            return f"<td><div><span class='date'>{day}</span><ul class='ulcalendar'> {d} </ul></div></td>"
         return '<td></td>'
 
     # formats a week as a tr

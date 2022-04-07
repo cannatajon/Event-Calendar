@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('gridview/', views.CalendarView.as_view(), name='grid_view'),
     path('pinview/', views.pin_view, name="pin_view"),
+    path('listview/', views.list_view, name="list_view"),
 
     path('search/', views.search, name='search'),
 
