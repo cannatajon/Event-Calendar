@@ -2,7 +2,7 @@
 <h3>Add event</h3>
 <form method="post" action="{% url 'add_event'%}">
   {%csrf_token%} {{event_form.as_p}}
-  <input type="submit" value="Add to Calendar" />
+  <input type="submit" value="Add to Calendar" class="red btn"/>
 </form>
 <style>
   body {

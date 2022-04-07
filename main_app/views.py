@@ -180,7 +180,7 @@ class Calendar(HTMLCalendar):
             d += f'<a href="/events/{event.id}"><li> {event.title} </li></a>'
 
         if day != 0:
-            return f"<td><div><span class='date'>{day}</span><ul> {d} </ul></div></td>"
+            return f"<td><div><span class='date'>{day}</span><ul class='ulcalendar'> {d} </ul></div></td>"
         return '<td></td>'
 
     # formats a week as a tr

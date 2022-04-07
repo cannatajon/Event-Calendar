@@ -117,6 +117,8 @@ tbody{
   width: 200px;
   height: 150px;
   padding: 20px 0px 0px 5px;
+  overflow-y: scroll;
+  
 }
 
 .month {
@@ -126,18 +128,23 @@ tbody{
 .date {
   font-size: 16px;
   position:absolute;
-  top: -90px;
+  top: -85px;
   right: 5px;
 }
 
 .calendar td div {
   position: relative;
+  max-height: 150px;
 }
 
-ul {
-  /* was causing issues with materialize dropdown menu */
-  /* height: 100%; */  
+.ulcalendar {
+  position: absolute;
+  top: -85px;
+}
+
+.navlist{
   padding: 0px 5px 0px 20px;
+  top: auto;
 }
 
 .prevNext {
@@ -196,5 +203,20 @@ li{
 }
 
 nav{
-  height: 70px;
+  height: 74px;
+}
+
+.right{
+  margin: 5px;
+}
+
+.protext,
+.proimg,
+.probtn{
+  text-align: center;
+}
+
+.propic{
+  border: 5px ridge rgb(231, 20, 20);
+  border-radius: 100px;
 }
