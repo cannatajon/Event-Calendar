@@ -191,7 +191,7 @@ class Calendar(HTMLCalendar):
             print(event.tags)
 
         if day != 0:
-            return f"<td><div><span class='date'>{day}</span><ul> {d} </ul></div></td>"
+            return f"<td><div><span class='date'>{day}</span><ul class='ulcalendar'> {d} </ul></div></td>"
         return '<td></td>'
 
     # formats a week as a tr

@@ -2,12 +2,16 @@
 <h3>Add event</h3>
 <form method="post" action="{% url 'add_event'%}">
   {%csrf_token%} {{event_form.as_p}}
+<<<<<<< HEAD
   <select name="color">
     {%for color in colors%}
     <option value="{{color}}">{{color}}</option>
     {% endfor %}
   </select>
   <input type="submit" value="Add to Calendar" />
+=======
+  <input type="submit" value="Add to Calendar" class="red btn"/>
+>>>>>>> 29d435cea31036bfa81635909307bb9b98c380f5
 </form>
 <style>
   body {
