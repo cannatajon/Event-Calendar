@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% block content %}
-<br />
+<h2 class="white-black">My Calendar</h2>
+<hr />
 <style>
     .grid-toggle {
         background-color: red;
@@ -9,7 +10,7 @@
 <div class="toggle-switches">
     <a href="/gridview"><span>Grid View</span></a>
     <a href="/pinview"><span class="grid-toggle">Pin View</span></a>
-    <a href="/"><span>List View</span></a>
+    <a href="/listview"><span>List View</span></a>
 </div>
 <br>
 {% for event in events %}
