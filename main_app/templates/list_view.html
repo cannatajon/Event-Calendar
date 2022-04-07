@@ -1,0 +1,41 @@
+{% extends 'base.html' %} {% block content %}
+<h2 class="white-black">My Calendar</h2>
+<hr />
+<style>
+    .grid-toggle {
+        background-color: red;
+        color: white;
+    }
+</style>
+<div class="toggle-switches">
+    <a href="/gridview"><span>Grid View</span></a>
+    <a href="/pinview"><span>Pin View</span></a>
+    <a href="/listview"><span class="grid-toggle">List View</span></a>
+</div>
+<br />
+{% for event in events %}
+<a href="{% url 'event_detail' event.id %}">
+    <div class="row card horizontal valign-wrapper">
+        <div class="col s4 card-image">
+            <img class="responsive-img" src="{{ event.image }}" />
+        </div>
+        <div class="col s8 card-content grey-text text-darken-4">
+            <span class="card-title">{{ event.title }}</span>
+            <p>{{ event.start_time }} - {{ event.end_time }}</p>
+            {% comment %}
+            <p>{{ event.description }}</p>
+            {% endcomment %} {% for venue in event.venue.all %} {% comment %}
+            <p>{{ venue.city|title }}</p>
+            {% endcomment %}
+            <small>{{venue.name}} - {{venue.address}}</small>
+            {% endfor %}
+            <div>
+                {% for tag in event.tags.all %}
+                <div class="chip">{{ tag.name }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</a>
+
+{% endfor %} {% endblock content %}
