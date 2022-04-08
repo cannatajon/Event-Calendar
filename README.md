@@ -1,5 +1,12 @@
 # Calender.io
 
+## Project Team
+
+[Jon Cannata](https://github.com/cannatajon)<br>
+[Jon Toye](https://github.com/jontoye)<br>
+[Nate Mueller](https://github.com/natetmmueller)<br>
+[Mateas Guenette](https://git.generalassemb.ly/mateasguenette)<br>
+
 ## Getting Started
 
 Calender.io is our solution to managing a busy schedule. Users can create their own custom events to keep track of, as well as search for nearby events that might be of interest.
