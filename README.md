@@ -1,4 +1,4 @@
-# Calender.io
+# Calendar.io
 
 ## Project Team
 
